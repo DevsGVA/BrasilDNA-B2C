@@ -1,0 +1,263 @@
+/* ============================================================
+   PARTNERS — Redesign 2026
+   ============================================================ */
+.partners {
+   background: var(--sand-deep);
+   position: relative;
+   overflow: hidden;
+}
+
+/* Subtle background texture */
+.partners::before {
+   content: '';
+   position: absolute;
+   top: -120px;
+   right: -80px;
+   width: 500px;
+   height: 500px;
+   background: radial-gradient(circle, rgba(45, 158, 88, 0.06) 0%, transparent 70%);
+   pointer-events: none;
+}
+.partners::after {
+   content: '';
+   position: absolute;
+   bottom: -80px;
+   left: -60px;
+   width: 380px;
+   height: 380px;
+   background: radial-gradient(circle, rgba(200, 16, 46, 0.04) 0%, transparent 70%);
+   pointer-events: none;
+}
+
+/* ── Header ── */
+.partners-header {
+   display: flex;
+   align-items: flex-end;
+   justify-content: space-between;
+   gap: 40px;
+   margin-bottom: 56px;
+}
+.partners-header h2 {
+   font-size: clamp(2rem, 4vw, 3rem);
+   margin-bottom: 0;
+   line-height: 1.15;
+}
+.partners-lead {
+   max-width: 360px;
+   font-size: 1rem;
+   color: var(--ink-soft);
+   line-height: 1.65;
+   flex-shrink: 0;
+   padding-bottom: 6px;
+   opacity: 0.85;
+}
+
+/* ── Grid ── */
+.partners-row {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 28px;
+}
+
+/* ── Card ── */
+.partner-card {
+   background: var(--white);
+   border-radius: var(--r-xl);
+   padding: 40px 38px 34px;
+   box-shadow: 0 4px 24px -8px rgba(1, 42, 21, 0.12), 0 1px 4px rgba(1,42,21,0.06);
+   display: flex;
+   flex-direction: column;
+   transition:
+      transform 0.38s var(--ease-spring),
+      box-shadow 0.35s var(--ease);
+   position: relative;
+   overflow: hidden;
+}
+
+/* Accent line on hover */
+.partner-card::before {
+   content: '';
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   height: 3px;
+   background: linear-gradient(90deg, var(--green-700), var(--green-500));
+   transform: scaleX(0);
+   transform-origin: left;
+   transition: transform 0.4s var(--ease);
+   border-radius: 0 0 3px 3px;
+}
+.partner-card:hover::before {
+   transform: scaleX(1);
+}
+.partner-card:hover {
+   transform: translateY(-7px);
+   box-shadow: var(--shadow-green), 0 1px 4px rgba(1,42,21,0.08);
+}
+
+/* ── Cover Image ── */
+.partner-card__cover {
+   margin: -40px -38px 28px;
+   height: 200px;
+   overflow: hidden;
+   border-radius: var(--r-xl) var(--r-xl) 0 0;
+   position: relative;
+}
+.partner-card__cover img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   display: block;
+   transition: transform 0.55s var(--ease);
+}
+.partner-card:hover .partner-card__cover img {
+   transform: scale(1.05);
+}
+.partner-card__cover-overlay {
+   position: absolute;
+   inset: 0;
+   background: linear-gradient(
+      to bottom,
+      transparent 40%,
+      rgba(1, 42, 21, 0.45) 100%
+   );
+}
+
+/* ── Card Top Row ── */
+.partner-card__top {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin-bottom: 24px;
+}
+
+/* ── Icon ── */
+.partner-icon {
+   width: 80px;
+   height: 80px;
+   border-radius: var(--r-md);
+   background: var(--green-900);
+   color: var(--gold);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-shrink: 0;
+   box-shadow: 0 4px 12px rgba(1, 42, 21, 0.25);
+}
+.partner-icon--gold {
+   background: linear-gradient(135deg, var(--green-800), var(--green-600));
+}
+
+/* ── Region Tag ── */
+.partner-tag-region {
+   font-size: 0.72rem;
+   font-weight: 700;
+   letter-spacing: 0.1em;
+   text-transform: uppercase;
+   color: var(--green-700);
+   background: var(--green-100);
+   border: 1px solid rgba(3, 104, 48, 0.18);
+   padding: 5px 13px;
+   border-radius: 999px;
+}
+
+/* ── Typography ── */
+.partner-card h3 {
+   font-family: var(--font-display);
+   font-size: 1.4rem;
+   font-weight: 700;
+   color: var(--ink);
+   margin-bottom: 4px;
+   line-height: 1.2;
+}
+.partner-tagline {
+   font-size: 0.88rem;
+   color: var(--red);
+   font-weight: 600;
+   font-style: italic;
+   margin-bottom: 0;
+}
+
+/* ── Divider ── */
+.partner-divider {
+   height: 1px;
+   background: linear-gradient(90deg, rgba(1,42,21,0.1) 0%, transparent 100%);
+   margin: 20px 0;
+}
+
+/* ── Description ── */
+.partner-desc-text {
+   color: var(--ink-soft);
+   font-size: 0.94rem;
+   line-height: 1.7;
+   flex: 1;
+   margin-bottom: 0;
+}
+
+/* ── Footer: socials + link ── */
+.partner-footer {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin-top: 28px;
+   padding-top: 22px;
+   border-top: 1px solid rgba(1, 42, 21, 0.08);
+   gap: 16px;
+}
+
+/* ── Social Buttons ── */
+.partner-socials {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+}
+.partner-social-btn {
+   width: 34px;
+   height: 34px;
+   border-radius: 50%;
+   background: var(--green-100);
+   color: var(--green-700);
+   border: 1px solid rgba(3, 104, 48, 0.15);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   transition:
+      background 0.25s,
+      color 0.25s,
+      transform 0.25s var(--ease-spring),
+      border-color 0.25s;
+   text-decoration: none;
+}
+.partner-social-btn:hover {
+   background: var(--green-900);
+   color: var(--gold);
+   border-color: var(--green-900);
+   transform: translateY(-2px);
+}
+
+/* ── Explore Link ── */
+.partner-link {
+   display: inline-flex;
+   align-items: center;
+   gap: 6px;
+   font-weight: 700;
+   font-size: 0.88rem;
+   color: var(--red);
+   text-decoration: none;
+   white-space: nowrap;
+   transition:
+      color 0.25s,
+      gap 0.25s var(--ease-spring);
+}
+.partner-link:hover {
+   color: var(--red-dark);
+   gap: 10px;
+}
+.partner-link svg {
+   flex-shrink: 0;
+   transition: transform 0.25s var(--ease-spring);
+}
+.partner-link:hover svg {
+   transform: translateX(3px);
+}

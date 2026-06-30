@@ -1,0 +1,182 @@
+/* ============================================================
+   HEADER
+   ============================================================ */
+.site-header {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   z-index: 900;
+   padding: 16px 0;
+   background: rgba(253, 248, 240, 0.97);
+   backdrop-filter: blur(12px);
+   box-shadow: 0 2px 24px -8px rgba(1, 42, 21, 0.2);
+   transition:
+      background 0.4s cubic-bezier(.4,0,.2,1),
+      padding 0.38s cubic-bezier(.4,0,.2,1),
+      box-shadow 0.38s cubic-bezier(.4,0,.2,1);
+}
+.site-header.scrolled {
+   background: rgba(253, 248, 240, 0.97);
+   backdrop-filter: blur(12px);
+   padding: 8px 0;
+   box-shadow: 0 2px 20px -6px rgba(1, 42, 21, 0.28);
+}
+.site-header.nav-open {
+   padding: 10px 0;
+   box-shadow: 0 4px 32px -8px rgba(1, 42, 21, 0.25);
+}
+.header-inner {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 20px;
+}
+
+.logo-group {
+   display: flex;
+   align-items: center;
+   gap: 14px;
+}
+
+.logo-divider {
+   width: 1px;
+   height: 40px;
+   background: rgba(1, 42, 21, 0.2);
+   flex-shrink: 0;
+   transition: opacity 0.35s cubic-bezier(.4,0,.2,1);
+}
+.site-header.scrolled .logo-divider {
+   opacity: 0.5;
+}
+
+.logo-brasil {
+   height: 52px;
+   width: auto;
+   display: block;
+   transform-origin: left center;
+   transition: transform 0.38s cubic-bezier(.4,0,.2,1), opacity 0.38s;
+}
+.site-header.scrolled .logo-brasil {
+   transform: scale(0.69);
+   opacity: 0.85;
+}
+
+.logo-img {
+   height: 70px;
+   width: auto;
+   display: block;
+   transform-origin: left center;
+   transition: transform 0.38s cubic-bezier(.4,0,.2,1);
+}
+.site-header.scrolled .logo-img {
+   transform: scale(0.86);
+}
+
+/* Nav — fora do header no HTML, posicionado via CSS no desktop */
+.main-nav {
+   position: fixed;
+   top: 0;
+   right: 0;
+   z-index: 950;
+   display: flex;
+   align-items: center;
+   gap: 36px;
+   height: 102px;
+   padding: 0 32px;
+   transition: height 0.38s cubic-bezier(.4,0,.2,1);
+}
+.site-header.scrolled ~ .main-nav {
+   height: 60px;
+}
+.main-nav > a {
+   font-size: 0.9rem;
+   font-weight: 600;
+   color: var(--ink);
+   position: relative;
+   transition: color 0.25s;
+}
+.site-header.scrolled .main-nav > a:not(.nav-cta) {
+   color: var(--ink);
+}
+.main-nav > a:not(.nav-cta)::after {
+   content: "";
+   position: absolute;
+   left: 0;
+   bottom: -4px;
+   height: 2px;
+   width: 0;
+   background: var(--red);
+   border-radius: 2px;
+   transition: width 0.3s var(--ease);
+}
+.main-nav > a:not(.nav-cta):hover::after {
+   width: 100%;
+}
+
+.nav-cta {
+   background: var(--gold);
+   color: var(--ink) !important;
+   padding: 9px 20px;
+   border-radius: 999px;
+   font-size: 0.88rem;
+   transition:
+      background 0.25s,
+      transform 0.25s var(--ease-spring) !important;
+}
+.nav-cta:hover {
+   background: var(--gold-light);
+   transform: translateY(-2px);
+}
+
+/* Hamburger */
+.nav-toggle {
+   display: none;
+   flex-direction: column;
+   justify-content: center;
+   gap: 5px;
+   width: 42px;
+   height: 42px;
+   background: transparent;
+   border: none;
+   cursor: pointer;
+   z-index: 950;
+}
+.nav-toggle span {
+   display: block;
+   height: 2px;
+   background: var(--ink);
+   border-radius: 2px;
+   transition:
+      transform 0.3s var(--ease),
+      opacity 0.25s,
+      background 0.3s;
+}
+.site-header.scrolled .nav-toggle span {
+   background: var(--ink);
+}
+.nav-toggle.open span:nth-child(1) {
+   transform: translateY(7px) rotate(45deg);
+}
+.nav-toggle.open span:nth-child(2) {
+   opacity: 0;
+}
+.nav-toggle.open span:nth-child(3) {
+   transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Nav overlay base — z-index garante ficar acima do conteúdo */
+.nav-overlay {
+   position: fixed;
+   inset: 0;
+   background: transparent;
+   z-index: 930;
+   opacity: 0;
+   pointer-events: none;
+   transition: opacity 0.35s ease;
+}
+.nav-overlay.is-open {
+   opacity: 1;
+   pointer-events: all;
+}
+

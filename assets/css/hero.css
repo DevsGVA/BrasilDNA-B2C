@@ -1,0 +1,227 @@
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+   position: relative;
+   min-height: 100vh;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   overflow: hidden;
+   background: var(--green-900);
+   color: var(--white);
+}
+.hero::after {
+   content: '';
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   height: 4px;
+   background: linear-gradient(90deg, var(--green-600) 0%, var(--gold) 50%, var(--red) 100%);
+   z-index: 10;
+}
+
+.hero-bg {
+   position: absolute;
+   inset: 0;
+   z-index: 0;
+}
+.hero-img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   position: absolute;
+   inset: 0;
+   animation: heroZoom 26s ease-in-out infinite alternate;
+}
+@keyframes heroZoom {
+   from {
+      transform: scale(1);
+   }
+   to {
+      transform: scale(1.1);
+   }
+}
+.hero-overlay {
+   position: absolute;
+   inset: 0;
+   background: linear-gradient(
+      180deg,
+      rgba(1, 42, 21, 0.55) 0%,
+      rgba(1, 42, 21, 0.35) 40%,
+      rgba(1, 42, 21, 0.8) 100%
+   );
+}
+
+/* Bandeira stripe accent — signature element */
+.hero-flag-stripe {
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   height: 5px;
+   display: flex;
+   z-index: 10;
+}
+.stripe {
+   flex: 1;
+}
+.stripe--green {
+   background: var(--green-600);
+}
+.stripe--yellow {
+   background: var(--gold);
+}
+
+/* Hero content */
+.hero-body {
+   position: relative;
+   z-index: 5;
+   text-align: center;
+   padding: 140px 32px 80px;
+   width: 100%;
+}
+.hero-eyebrow {
+   margin-bottom: 20px;
+}
+.hashtag {
+   display: inline-block;
+   background: var(--red);
+   color: var(--white);
+   font-size: 0.8rem;
+   font-weight: 700;
+   letter-spacing: 0.1em;
+   text-transform: uppercase;
+   padding: 6px 18px;
+   border-radius: 999px;
+}
+.hero-body h1 {
+   font-size: clamp(2.8rem, 7vw, 5.5rem);
+   font-weight: 900;
+   line-height: 1;
+   text-shadow: 0 2px 30px rgba(1, 42, 21, 0.5);
+   margin-bottom: 24px;
+}
+.hero-body h1 em {
+   color: var(--gold);
+   font-style: italic;
+}
+.hero-lead {
+   font-size: clamp(1rem, 2vw, 1.25rem);
+   color: rgba(255, 255, 255, 0.85);
+   max-width: 580px;
+   margin: 0 auto 36px;
+   font-weight: 300;
+}
+.hero-actions {
+   display: flex;
+   gap: 14px;
+   justify-content: center;
+   flex-wrap: wrap;
+   margin-bottom: 56px;
+}
+
+/* ATGC pill tags */
+.hero-pillars {
+   display: flex;
+   gap: 12px;
+   justify-content: center;
+   flex-wrap: wrap;
+}
+.pillar-tag {
+   display: inline-flex;
+   align-items: center;
+   gap: 2px;
+   background: rgba(255, 255, 255, 0.08);
+   border: 1px solid rgba(255, 255, 255, 0.25);
+   color: var(--white);
+   font-size: 0.92rem;
+   font-weight: 500;
+   padding: 10px 20px;
+   border-radius: 999px;
+   backdrop-filter: blur(8px);
+   transition:
+      background 0.3s,
+      border-color 0.3s,
+      transform 0.3s var(--ease-spring);
+}
+.pillar-tag span {
+   font-family: var(--font-display);
+   font-weight: 900;
+   font-size: 1.05rem;
+   color: var(--gold);
+   margin-right: 1px;
+}
+.pillar-tag:hover {
+   background: rgba(255, 255, 255, 0.18);
+   border-color: var(--gold);
+   transform: translateY(-3px);
+}
+
+/* Partner logos */
+.hero-partners {
+   position: relative;
+   z-index: 5;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 40px;
+   padding: 40px 32px 60px;
+}
+.hero-partners img {
+   height: 32px;
+   object-fit: contain;
+   filter: none !important;
+   opacity: 1 !important;
+   transition: none !important;
+}
+/* No hover effects for partner logos */
+
+/* Embratur square + wordmark */
+.logo-embratur {
+   display: inline-flex;
+   align-items: center;
+   gap: 10px;
+}
+.logo-embratur img {
+   height: 32px;
+   width: auto;
+   display: block;
+}
+.logo-embratur .embratur-wordmark {
+   color: #fff;
+   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+   font-weight: 700;
+   font-size: 20px;
+   line-height: 1;
+}
+
+/* Scroll arrow */
+.scroll-arrow {
+   position: absolute;
+   bottom: 30px;
+   left: 50%;
+   transform: translateX(-50%);
+   z-index: 5;
+   color: rgba(255, 255, 255, 0.6);
+   transition:
+      color 0.3s,
+      transform 0.3s var(--ease);
+   animation: arrowBob 2.4s ease-in-out infinite;
+}
+.scroll-arrow:hover {
+   color: var(--gold);
+   transform: translateX(-50%) translateY(4px);
+}
+@keyframes arrowBob {
+   0%,
+   100% {
+      transform: translateX(-50%) translateY(0);
+   }
+   50% {
+      transform: translateX(-50%) translateY(7px);
+   }
+}
+

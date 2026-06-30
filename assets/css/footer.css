@@ -1,0 +1,145 @@
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer {
+   background: var(--ink);
+   color: var(--sand);
+   padding-top: 1rem;
+}
+.footer-top {
+   display: grid;
+   grid-template-columns: 1.5fr 1fr 1fr;
+   gap: 56px;
+   padding: 72px 32px 56px;
+   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+   max-width: var(--max-w);
+   margin: 0 auto;
+}
+.footer-brand .brasildna-logo {
+   height: 40px;
+   width: auto;
+   display: block;
+   margin-bottom: 14px;
+   opacity: 0.9;
+   padding-top: 1rem;
+}
+.footer-brand .logo-b,
+.footer-brand .logo-d,
+.footer-brand .logo-e { fill: #fff; }
+.footer-brand .logo-f { stroke: #fff; }
+.footer-brand p {
+   color: rgba(253, 248, 240, 0.65);
+   font-size: 0.9rem;
+}
+.social-links {
+   display: flex;
+   gap: 10px;
+   margin-top: 20px;
+}
+.social-links a {
+   width: 36px;
+   height: 36px;
+   border-radius: 50%;
+   background: rgba(255, 255, 255, 0.07);
+   border: 1px solid rgba(255, 255, 255, 0.1);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: var(--sand);
+   transition:
+      background 0.3s,
+      transform 0.3s var(--ease-spring),
+      border-color 0.3s;
+}
+.social-links a:hover {
+   background: var(--red);
+   border-color: var(--red);
+   transform: translateY(-4px);
+}
+.footer-nav h4,
+.footer-presented h4 {
+   font-family: var(--font-body);
+   font-size: 0.72rem;
+   text-transform: uppercase;
+   letter-spacing: 0.1em;
+   color: var(--gold-light);
+   margin-bottom: 18px;
+   font-weight: 700;
+}
+.footer-nav {
+   display: flex;
+   flex-direction: column;
+   gap: 2px;
+}
+.footer-nav a {
+   padding: 5px 0;
+   font-size: 0.9rem;
+   color: rgba(253, 248, 240, 0.7);
+   transition:
+      color 0.25s,
+      padding-left 0.25s;
+}
+.footer-nav a:hover {
+   color: var(--gold-light);
+   padding-left: 4px;
+}
+.footer-partner-link {
+   margin-top: 10px;
+   color: var(--gold-light) !important;
+   font-weight: 600;
+   letter-spacing: 0.03em;
+}
+.footer-partner-link:hover {
+   opacity: 0.8;
+}
+.footer-presented img {
+   height: 34px;
+   opacity: 1 !important;
+   filter: none !important;
+   transition: none !important;
+}
+
+/* Partners bar */
+.footer-partners-bar {
+   background: rgba(255, 255, 255, 0.04);
+   border-top: 1px solid rgba(255, 255, 255, 0.06);
+   padding: 28px 0;
+}
+.footer-partners-row {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 48px;
+}
+.footer-partners-row img {
+   height: 46px;
+   object-fit: contain;
+   filter: none !important;
+   opacity: 1 !important;
+   transition: none !important;
+}
+/* No hover effects for footer partner logos */
+
+.footer-partners-row .logo-embratur img {
+   height: 26px;
+}
+.footer-partners-row .logo-embratur .embratur-wordmark {
+   font-size: 16px;
+}
+
+.footer-bottom {
+   padding: 24px 0;
+   text-align: center;
+}
+.footer-bottom p {
+   font-size: 0.82rem;
+   color: rgba(253, 248, 240, 0.4);
+   margin: 0;
+}
+
+.painel{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+

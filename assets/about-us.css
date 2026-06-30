@@ -1,0 +1,961 @@
+/* ============================================================
+   BRASIL DNA — About Us Page Styles
+   Extends: assets/style.css (sempre carregado antes)
+   Design System: Verde-floresta · Vermelho-hibisco · Ouro-ipê
+   ============================================================ */
+
+/* ============================================================
+   PAGE HERO — about-us.php
+   (reutiliza .page-hero já definido em style.css,
+    mas adiciona zoom-in suave na imagem de fundo)
+   ============================================================ */
+.page-hero {
+  text-align: center;
+}
+
+.page-hero-img {
+  animation: heroZoom 26s ease-in-out infinite alternate;
+}
+
+.hero-flag-stripe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  display: flex;
+  z-index: 10;
+}
+
+/* ============================================================
+   ABOUT INTRO
+   ============================================================ */
+.about-intro {
+  background: var(--white);
+  padding: 100px 0;
+}
+
+.about-intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.45fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.about-intro-lead h1 {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+
+.about-intro-lead h1 em {
+  color: var(--red);
+  font-style: italic;
+}
+
+.about-intro-lead h3 {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green-600);
+  margin: 0;
+}
+
+.about-intro-copy p {
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+  line-height: 1.8;
+  margin-bottom: 1.1rem;
+}
+
+/* Stats row */
+.about-stats {
+  display: flex;
+  gap: 40px;
+  margin-top: 40px;
+  padding-top: 36px;
+  border-top: 1px solid var(--sand-deep);
+  flex-wrap: wrap;
+}
+
+.about-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.about-stat-num {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--red);
+  line-height: 1;
+}
+
+.about-stat-num em {
+  font-size: 1.6rem;
+  color: var(--gold);
+  font-style: normal;
+  vertical-align: middle;
+}
+
+.about-stat-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+}
+
+/* ============================================================
+   CONCEPT BAND — DNA letters A G C T
+   ============================================================ */
+.about-concept-band {
+  background: var(--green-900);
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-concept-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 80% at 0% 50%, rgba(3, 104, 48, 0.45), transparent),
+    radial-gradient(ellipse 45% 60% at 100% 20%, rgba(200, 16, 46, 0.15), transparent);
+  pointer-events: none;
+}
+
+.concept-band-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.concept-band-text {
+  max-width: 480px;
+}
+
+.concept-band-text .label-tag {
+  margin-bottom: 16px;
+}
+
+.concept-band-text h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  color: var(--white);
+  margin-bottom: 16px;
+}
+
+.concept-band-text h2 em {
+  color: var(--gold);
+}
+
+.concept-band-text p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.97rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* DNA letter buttons */
+.concept-band-letters {
+  display: flex;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.cband-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--white);
+  text-decoration: none;
+  position: relative;
+  transition:
+    transform 0.35s var(--ease-spring),
+    box-shadow 0.35s var(--ease);
+  box-shadow: 0 8px 28px -10px rgba(0, 0, 0, 0.5);
+}
+
+.cband-letter::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+}
+
+.cband-letter:hover {
+  transform: translateY(-8px) scale(1.08);
+  box-shadow: 0 20px 44px -12px rgba(0, 0, 0, 0.55);
+}
+
+.cband-letter:hover::after {
+  border-color: var(--gold);
+}
+
+.cband-letter--a { background: var(--red); }
+.cband-letter--g { background: var(--gold); color: var(--ink); }
+.cband-letter--c { background: var(--green-700); }
+.cband-letter--t { background: var(--blue-flag); }
+
+/* ============================================================
+   PILLAR DEEP-DIVE SECTIONS
+   ============================================================ */
+.pillar-deep {
+  padding: 100px 0;
+  background: var(--sand);
+}
+
+.pillar-deep:nth-child(even) {
+  background: var(--white);
+}
+
+.pillar-deep-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+/* Flipped layout (text left, image right) */
+.pillar-deep-grid--flip {
+  direction: rtl;
+}
+.pillar-deep-grid--flip > * {
+  direction: ltr;
+}
+
+/* Media column */
+.pillar-deep-media {
+  position: relative;
+}
+
+.pillar-deep-media img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-green);
+  display: block;
+  transition: transform 0.7s var(--ease);
+}
+
+.pillar-deep-media:hover img {
+  transform: scale(1.025);
+}
+
+/* Floating letter badge */
+.pillar-deep-badge {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 900;
+  color: var(--white);
+  box-shadow: 0 10px 32px -8px rgba(0, 0, 0, 0.35);
+  z-index: 2;
+  transition: transform 0.35s var(--ease-spring);
+}
+
+.pillar-deep-media:hover .pillar-deep-badge {
+  transform: rotate(-8deg) scale(1.1);
+}
+
+/* Flip: badge on right side */
+.pillar-deep-grid--flip .pillar-deep-badge {
+  left: auto;
+  right: -20px;
+}
+
+/* Pull-quote */
+.pillar-deep-quote {
+  position: absolute;
+  bottom: -18px;
+  right: -18px;
+  left: 20px;
+  background: var(--white);
+  border-left: 3px solid var(--gold);
+  padding: 16px 20px;
+  border-radius: var(--r-md);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  box-shadow: var(--shadow-card);
+  margin: 0;
+  z-index: 2;
+}
+
+/* Flip: quote on left side */
+.pillar-deep-grid--flip .pillar-deep-quote {
+  right: 20px;
+  left: -18px;
+  border-left: none;
+  border-right: 3px solid var(--gold);
+}
+
+/* Text column */
+.pillar-deep-text .label-tag {
+  margin-bottom: 10px;
+}
+
+.pillar-deep-text h2 {
+  font-size: clamp(2rem, 3.8vw, 2.9rem);
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.pillar-deep-text h2 em {
+  color: var(--red);
+}
+
+.pillar-deep-kicker {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  margin-bottom: 20px;
+}
+
+.pillar-deep-text > p {
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+/* Feature list */
+.pillar-deep-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.pillar-deep-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.pillar-deep-item-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  margin-top: 2px;
+}
+
+.pillar-deep-item h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+  font-family: var(--font-body);
+}
+
+.pillar-deep-item p {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ============================================================
+   SUSTAINABILITY SECTION
+   ============================================================ */
+.sustainability {
+  position: relative;
+  background: var(--green-900);
+  padding: 100px 0;
+  overflow: hidden;
+  color: var(--white);
+}
+
+.sustainability-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 65% 70% at 10% 60%, rgba(3, 104, 48, 0.5), transparent),
+    radial-gradient(ellipse 40% 55% at 95% 10%, rgba(249, 176, 0, 0.1), transparent);
+  pointer-events: none;
+}
+
+.sustainability-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: center;
+}
+
+.sustainability-text h2 {
+  font-size: clamp(1.9rem, 3.5vw, 2.7rem);
+  color: var(--white);
+  margin-bottom: 16px;
+}
+
+.sustainability-text h2 em {
+  color: var(--gold);
+}
+
+.sustainability-text p {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1rem;
+  line-height: 1.75;
+  margin: 0;
+}
+
+.sustainability-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sustain-card {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--r-lg);
+  padding: 28px 24px;
+  transition:
+    background 0.3s,
+    border-color 0.3s,
+    transform 0.35s var(--ease-spring);
+}
+
+.sustain-card:hover {
+  background: rgba(255, 255, 255, 0.11);
+  border-color: var(--gold);
+  transform: translateY(-4px);
+}
+
+.sustain-card-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  background: rgba(249, 176, 0, 0.15);
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+}
+
+.sustain-card h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+  font-family: var(--font-body);
+}
+
+.sustain-card p {
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ============================================================
+   IMPACT / PILLARS GRID (reutiliza .pillars-grid de style.css)
+   — overrides específicos para bg claro
+   ============================================================ */
+.section .pillars-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* ============================================================
+   TIMELINE SECTION
+   ============================================================ */
+.timeline-section {
+  background: var(--sand-deep);
+  padding: 100px 0;
+}
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 56px;
+  position: relative;
+}
+
+/* Connecting line */
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 28px; /* vertically centered on dot */
+  left: calc(100% / 6);
+  right: calc(100% / 6);
+  height: 2px;
+  background: linear-gradient(90deg, var(--green-700), var(--red), var(--blue-flag));
+  z-index: 0;
+}
+
+.timeline-item {
+  position: relative;
+  z-index: 1;
+  padding: 0 32px;
+  text-align: center;
+}
+
+.timeline-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--green-900);
+  color: var(--gold);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 20px -6px rgba(1, 42, 21, 0.4);
+  transition:
+    background 0.3s,
+    transform 0.35s var(--ease-spring);
+}
+
+.timeline-item:hover .timeline-dot {
+  background: var(--red);
+  transform: scale(1.12);
+}
+
+.timeline-item:nth-child(2) .timeline-dot { background: var(--red); }
+.timeline-item:nth-child(3) .timeline-dot { background: var(--blue-flag); }
+
+.timeline-item h4 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.timeline-item p {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ============================================================
+   VIDEO BAND — about-us-specific wrapper
+   ============================================================ */
+.about-video-band {
+  background: var(--white);
+  padding: 100px 0;
+}
+
+.about-video-band .section-head {
+  margin-bottom: 44px;
+}
+
+.about-video-band .video-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* Fix YouTube embed URL (embed vs watch) */
+.about-video-band .video-wrap iframe {
+  /* corrected src handled via PHP, just ensure ratio */
+  border: none;
+}
+
+/* ============================================================
+   ESSENCE — closing CTA section
+   ============================================================ */
+.essence {
+  position: relative;
+  padding: 120px 0;
+  overflow: hidden;
+  color: var(--white);
+  text-align: center;
+}
+
+.essence-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.essence-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+}
+
+.essence-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(1, 42, 21, 0.75) 0%,
+    rgba(1, 42, 21, 0.88) 100%
+  );
+}
+
+.essence-inner {
+  position: relative;
+  z-index: 5;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.essence-inner h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--white);
+  margin-bottom: 48px;
+}
+
+.essence-inner h2 em {
+  color: var(--gold);
+}
+
+/* Flow row: A → G → C → T */
+.essence-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 0;
+  margin-bottom: 48px;
+}
+
+.essence-flow-item {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 18px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  transition:
+    background 0.3s,
+    border-color 0.3s,
+    transform 0.3s var(--ease-spring);
+}
+
+.essence-flow-item:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: var(--gold);
+  transform: translateY(-3px);
+}
+
+.essence-flow-arrow {
+  color: var(--gold);
+  font-size: 1.3rem;
+  font-weight: 300;
+  padding: 0 6px;
+  line-height: 1;
+}
+
+.essence-closing {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.8;
+  margin: 0;
+}
+
+.essence-closing strong {
+  color: var(--gold-light);
+}
+
+/* ============================================================
+   RESPONSIVE — 1100px
+   ============================================================ */
+@media (max-width: 1100px) {
+  .about-intro-grid {
+    grid-template-columns: 1fr 1.2fr;
+    gap: 56px;
+  }
+
+  .pillar-deep-grid {
+    gap: 56px;
+  }
+
+  .concept-band-letters {
+    gap: 12px;
+  }
+
+  .cband-letter {
+    width: 60px;
+    height: 60px;
+    font-size: 1.7rem;
+  }
+
+  .section .pillars-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — 960px
+   ============================================================ */
+@media (max-width: 960px) {
+  .about-intro {
+    padding: 72px 0;
+  }
+
+  .about-intro-grid {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+
+  .about-intro-lead h1 {
+    font-size: clamp(2rem, 5vw, 2.8rem);
+  }
+
+  .about-stats {
+    gap: 28px;
+  }
+
+  .concept-band-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+  }
+
+  .concept-band-text {
+    max-width: 100%;
+  }
+
+  /* Pillar deep: stack */
+  .pillar-deep {
+    padding: 72px 0;
+  }
+
+  .pillar-deep-grid,
+  .pillar-deep-grid--flip {
+    grid-template-columns: 1fr;
+    direction: ltr;
+    gap: 56px;
+  }
+
+  /* When stacked: image always on top */
+  .pillar-deep-grid--flip .pillar-deep-media {
+    order: -1;
+  }
+
+  .pillar-deep-media img {
+    aspect-ratio: 16 / 9;
+  }
+
+  .pillar-deep-quote {
+    position: static;
+    margin-top: 16px;
+    right: auto;
+    left: auto;
+    border-left: 3px solid var(--gold);
+    border-right: none;
+  }
+
+  .pillar-deep-grid--flip .pillar-deep-quote {
+    border-right: none;
+    border-left: 3px solid var(--gold);
+  }
+
+  .pillar-deep-badge {
+    top: -16px;
+    left: -12px;
+  }
+
+  .pillar-deep-grid--flip .pillar-deep-badge {
+    left: -12px;
+    right: auto;
+  }
+
+  /* Sustainability */
+  .sustainability-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  /* Timeline */
+  .timeline {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .timeline::before {
+    top: 0;
+    bottom: 0;
+    left: 28px;
+    right: auto;
+    width: 2px;
+    height: auto;
+  }
+
+  .timeline-item {
+    text-align: left;
+    padding: 0 0 44px 80px;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 56px;
+    height: 56px;
+  }
+
+  .timeline-item {
+    position: relative;
+  }
+
+  /* Section pillars */
+  .section .pillars-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Essence flow */
+  .essence-flow {
+    gap: 8px;
+  }
+
+  .essence-flow-arrow {
+    display: none;
+  }
+
+  .essence-flow-item {
+    font-size: 0.82rem;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — 768px
+   ============================================================ */
+@media (max-width: 768px) {
+  .about-concept-band {
+    padding: 60px 0;
+  }
+
+  .concept-band-letters {
+    gap: 10px;
+  }
+
+  .cband-letter {
+    width: 52px;
+    height: 52px;
+    font-size: 1.45rem;
+  }
+
+  .about-stats {
+    gap: 20px;
+  }
+
+  .about-stat-num {
+    font-size: 2.2rem;
+  }
+
+  .pillar-deep-text h2 {
+    font-size: 1.9rem;
+  }
+
+  .timeline-section {
+    padding: 72px 0;
+  }
+
+  .about-video-band {
+    padding: 72px 0;
+  }
+
+  .essence {
+    padding: 88px 0;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — 480px
+   ============================================================ */
+@media (max-width: 480px) {
+  .about-intro {
+    padding: 56px 0;
+  }
+
+  .about-intro-lead h1 {
+    font-size: 1.9rem;
+  }
+
+  .about-stats {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .pillar-deep {
+    padding: 56px 0;
+  }
+
+  .pillar-deep-item-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .sustain-card {
+    padding: 20px 18px;
+  }
+
+  .timeline-item {
+    padding-left: 68px;
+    padding-bottom: 36px;
+  }
+
+  .timeline-dot {
+    width: 48px;
+    height: 48px;
+    font-size: 0.7rem;
+  }
+
+  .timeline::before {
+    left: 24px;
+  }
+
+  .essence {
+    padding: 72px 0;
+  }
+
+  .essence-closing {
+    font-size: 0.97rem;
+  }
+}

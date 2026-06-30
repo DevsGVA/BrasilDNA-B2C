@@ -1,0 +1,388 @@
+/* ============================================================
+   PARTNER BANNERS
+   ============================================================ */
+.partner-banners {
+   padding: 40px 0 60px;
+   background: var(--sand);
+}
+
+.partner-banners .label-tag {
+   display: none; /* banners falam por si só */
+}
+
+/* ── Carrossel ── */
+.banner-carousel {
+   position: relative;
+   height: 148px;        /* altura fixa = altura do banner */
+   border-radius: 10px;
+   overflow: hidden;
+   user-select: none;
+}
+
+/* Track: flex para desktop e mobile */
+.banner-track {
+   display: flex;
+   gap: 12px;
+   height: 100%;
+   transition: transform 0.4s ease;
+}
+
+/* Desktop: 3 banners por página */
+.partner-banner {
+   flex: 0 0 calc(33.333% - 8px);
+   position: relative;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 24px;
+   border-radius: 10px;
+   overflow: hidden;
+   background: #1a1a1a;
+   padding: 0 40px;
+   text-decoration: none;
+   height: 100%;
+   opacity: 1;
+   pointer-events: all;
+   flex-shrink: 0;
+}
+
+.partner-banner:hover {
+   filter: brightness(1.06);
+}
+
+/* Botões prev/next */
+.carousel-btn {
+   position: absolute;
+   top: 50%;
+   transform: translateY(-50%);
+   z-index: 30;
+   pointer-events: all;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 40px;
+   height: 40px;
+   border-radius: 50%;
+   border: none;
+   background: rgba(255, 255, 255, 0.92);
+   color: #111;
+   cursor: pointer;
+   box-shadow: 0 2px 12px rgba(0,0,0,0.22);
+   transition: background 0.2s, transform 0.2s, opacity 0.2s;
+   opacity: 0.85;
+}
+
+.carousel-btn--prev { left: 14px; }
+.carousel-btn--next { right: 14px; }
+
+.carousel-btn:hover {
+   background: var(--white);
+   opacity: 1;
+   transform: translateY(-50%) scale(1.08);
+}
+
+.carousel-btn:active {
+   transform: translateY(-50%) scale(0.96);
+}
+
+/* Bolinhas de página */
+.carousel-page-dots-mobile {
+   display: none;
+   justify-content: center;
+   align-items: center;
+   gap: 8px;
+   margin-top: 14px;
+}
+
+
+.carousel-page-dots-mobile.is-visible {
+   display: flex;
+}
+
+.carousel-pdot {
+   width: 8px;
+   height: 8px;
+   border-radius: 50%;
+   border: none;
+   background: var(--green-500);
+   opacity: 0.4;
+   cursor: pointer;
+   padding: 0;
+   transition: background 0.2s, transform 0.2s, opacity 0.2s;
+}
+
+.carousel-pdot.is-active {
+   background: var(--gold);
+   opacity: 1;
+   transform: scale(1.45);
+}
+
+/* Dots estáticos por banner — ocultos, usamos pageDots dinâmicos */
+.carousel-dots {
+   display: none;
+}
+
+.carousel-dot {
+   width: 8px;
+   height: 8px;
+   border-radius: 50%;
+   border: none;
+   background: rgba(255, 255, 255, 0.45);
+   cursor: pointer;
+   padding: 0;
+   transition: background 0.25s, transform 0.25s;
+}
+
+.carousel-dot.is-active {
+   background: var(--white, #fff);
+   transform: scale(1.35);
+}
+
+.partner-banner picture {
+   position: absolute;
+   inset: 0;
+   width: 100%;
+   height: 100%;
+   z-index: 0;
+}
+
+.partner-banner__bg {
+   position: absolute;
+   inset: 0;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   object-position: center;
+   z-index: 0;
+}
+
+/* Overlay sutil — preserva as cores da foto como no Compass */
+.partner-banner__overlay {
+   position: absolute;
+   inset: 0;
+   z-index: 1;
+   background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.52) 0%,
+      rgba(0, 0, 0, 0.12) 40%,
+      rgba(0, 0, 0, 0.30) 100%
+   );
+}
+
+/* LEFT: logo + tagline */
+.partner-banner__left {
+   position: relative;
+   z-index: 2;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   gap: 5px;
+   flex-shrink: 0;
+   max-width: 300px;
+}
+
+.partner-banner__logo {
+   height: 46px;
+   width: auto;
+   max-width: 190px;
+   object-fit: contain;
+   display: block;
+}
+
+.partner-banner__logo-text {
+   font-family: var(--font-display);
+   font-size: 1.45rem;
+   font-weight: 700;
+   color: var(--white);
+   line-height: 1.15;
+   text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+}
+
+.partner-banner__sub {
+   margin: 0;
+   font-size: 0.78rem;
+   font-weight: 600;
+   letter-spacing: 0.01em;
+   color: rgba(255, 255, 255, 0.9);
+   text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+/* RIGHT: título + botão */
+.partner-banner__right {
+   position: relative;
+   z-index: 2;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-end;
+   gap: 12px;
+   text-align: right;
+   flex-shrink: 0;
+}
+
+.partner-banner__title {
+   margin: 0;
+   font-family: var(--font-display);
+   font-size: clamp(1rem, 1.8vw, 1.35rem);
+   font-weight: 800;
+   color: var(--white);
+   text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+   line-height: 1.2;
+}
+
+.partner-banner__btn {
+   display: inline-block;
+   padding: 11px 30px;
+   border-radius: 999px;
+   background: rgba(255, 255, 255, 0.96);
+   color: #111;
+   font-family: var(--font-body);
+   font-weight: 700;
+   font-size: 0.87rem;
+   letter-spacing: 0.01em;
+   white-space: nowrap;
+   box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+   transition: background 0.2s, box-shadow 0.2s;
+}
+
+.partner-banner:hover .partner-banner__btn {
+   background: var(--white);
+   box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+}
+
+@media (max-width: 700px) {
+   .banner-carousel {
+      height: auto;
+   }
+   .banner-track {
+      gap: 0;
+   }
+   .partner-banner {
+      flex: 0 0 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      padding: 16px;
+      border-radius: 10px;
+   }
+   .carousel-btn {
+      width: 34px;
+      height: 34px;
+   }
+}
+
+/* ============================================================
+   BANNER AD SLOTS — propaganda espalhada na página
+   ============================================================ */
+.banner-ad-slot {
+   padding: 28px 0;
+}
+
+.banner-ad {
+   display: block;
+   position: relative;
+   height: 120px;
+   border-radius: 10px;
+   overflow: hidden;
+   text-decoration: none;
+   background: #1a1a1a;
+   transition: filter 0.2s;
+}
+
+.banner-ad:hover {
+   filter: brightness(1.06);
+}
+
+@media (max-width: 700px) {
+   .banner-ad {
+      height: auto;
+      aspect-ratio: 1 / 1;
+   }
+   .banner-ad-slot {
+      padding: 16px 0;
+   }
+}
+
+/* ============================================================
+   RESPONSIVE — GAPS & FIXES (complementar)
+   ============================================================ */
+
+/* 960px — seções why/feel: imagem não crescer demais ao empilhar */
+@media (max-width: 960px) {
+   .video-wrap {
+      max-width: 580px;
+      margin: 0 auto;
+   }
+   .section-head {
+      margin-bottom: 44px;
+   }
+   .why-text,
+   .feel-text {
+      text-align: center;
+   }
+   .why-text .btn,
+   .feel-text .btn {
+      margin-left: auto;
+      margin-right: auto;
+   }
+}
+
+/* 768px — ajustes gerais mobile */
+@media (max-width: 768px) {
+   .section-head {
+      margin-bottom: 36px;
+   }
+   .section-head h2 {
+      font-size: 1.75rem;
+   }
+   .partners-row {
+      grid-template-columns: 1fr;
+   }
+   .partner-icon {
+      width: 64px;
+      height: 64px;
+   }
+   .clients-mosaic {
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 160px;
+   }
+   .news-card .news-img-link img {
+      height: 180px;
+   }
+   .footer-partners-bar .footer-partners-row {
+      gap: 20px;
+   }
+   .footer-partners-bar img {
+      height: 28px;
+   }
+   .hero-body {
+      padding-bottom: 60px;
+   }
+}
+
+/* 480px — mobile pequeno */
+@media (max-width: 480px) {
+   .section {
+      padding: 56px 0;
+   }
+   .clients {
+      padding: 0;
+   }
+   .section-head h2 {
+      font-size: 1.5rem;
+   }
+   .clients-mosaic {
+      grid-template-columns: 1fr;
+      grid-auto-rows: 200px;
+   }
+   .partner-banners {
+      padding: 28px 0 40px;
+   }
+   .news-card {
+      border-radius: var(--r-lg);
+   }
+   .hero-partners {
+      gap: 16px;
+   }
+   .hero-partners img {
+      height: 20px;
+   }
+}

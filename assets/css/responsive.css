@@ -1,0 +1,233 @@
+/* ============================================================
+   RESPONSIVE — 1100px
+   ============================================================ */
+@media (max-width: 1100px) {
+   .pillars-grid {
+      grid-template-columns: repeat(2, 1fr);
+   }
+   .news-grid {
+      grid-template-columns: repeat(2, 1fr);
+   }
+}
+
+/* ============================================================
+   RESPONSIVE — 960px
+   ============================================================ */
+@media (max-width: 960px) {
+   .grid-2 {
+      grid-template-columns: 1fr;
+      gap: 44px;
+   }
+   .grid-2--reverse {
+      direction: ltr;
+   }
+
+   .dest-card,
+   .dest-card--flip {
+      grid-template-columns: 1fr;
+      direction: ltr;
+   }
+   .dest-media {
+      min-height: 300px;
+   }
+   .dest-info {
+      padding: 40px 36px;
+   }
+
+   .partners-row {
+      grid-template-columns: 1fr;
+   }
+   .partners-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+   }
+   .partners-lead {
+      max-width: 100%;
+   }
+   .newsletter-inner {
+      grid-template-columns: 1fr;
+      gap: 44px;
+   }
+
+   .footer-top {
+      grid-template-columns: 1fr 1fr;
+   }
+   .footer-brand {
+      grid-column: span 2;
+   }
+}
+
+/* ============================================================
+   RESPONSIVE — 768px (Mobile)
+   ============================================================ */
+@media (max-width: 768px) {
+   .nav-toggle {
+      display: flex;
+   }
+
+   .hero-body h1 {
+      font-size: 2.6rem;
+   }
+   .hero-pillars {
+      gap: 8px;
+   }
+   .pillar-tag {
+      font-size: 0.82rem;
+      padding: 8px 14px;
+   }
+
+   .section {
+      padding: 72px 0;
+   }
+   .clients {
+      padding: 0;
+      grid-template-columns: 1fr;
+   }
+   .clients-video-panel {
+      min-height: 520px;
+   }
+
+   .pillars-grid {
+      grid-template-columns: 1fr;
+   }
+   .news-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+   }
+   .news-img-link {
+      aspect-ratio: 3/2;
+   }
+   .news-body {
+      padding: 12px 14px 16px;
+   }
+   .news-body h3 {
+      font-size: 0.82rem;
+      line-height: 1.3;
+   }
+   .news-card-meta,
+   .news-more {
+      font-size: 0.72rem;
+   }
+
+   .footer-top {
+      grid-template-columns: 1fr;
+      gap: 36px;
+   }
+   .footer-brand {
+      grid-column: span 1;
+   }
+
+   .footer-partners-row {
+      gap: 28px;
+      flex-wrap: wrap;
+      justify-content: center;
+   }
+
+   .nl-row {
+      flex-direction: column;
+   }
+   .hero-partners {
+      gap: 24px;
+      flex-wrap: wrap;
+   }
+   .hero-partners img {
+      height: 24px;
+   }
+
+}
+
+/* ============================================================
+   RESPONSIVE — 480px
+   ============================================================ */
+@media (max-width: 480px) {
+   .container {
+      padding: 0 20px;
+   }
+   .hero-body {
+      padding-top: 140px;
+   }
+   .hero-body h1 {
+      font-size: 2.1rem;
+   }
+   .hero-actions {
+      flex-direction: column;
+      align-items: center;
+   }
+   .btn {
+      padding: 13px 26px;
+      font-size: 0.9rem;
+   }
+   .dest-info {
+      padding: 32px 24px;
+   }
+   .partner-card {
+      padding: 30px 24px 26px;
+   }
+   .partner-card__cover {
+      margin: -30px -24px 24px;
+   }
+   .partner-footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+   }
+   .video-wrap {
+      border-radius: var(--r-lg);
+   }
+}
+
+
+/* ============================================================
+   WHY TRAVEL — Responsive
+   ============================================================ */
+@media (max-width: 900px) {
+   .why-body {
+      grid-template-columns: 1fr;
+      gap: 44px;
+   }
+   .why-stats {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 0;
+      padding: 36px 28px;
+   }
+   .why-stat__divider {
+      display: none;
+   }
+}
+
+@media (max-width: 600px) {
+   .why-stats {
+      grid-template-columns: 1fr 1fr;
+      padding: 28px 20px;
+   }
+   .why-headline {
+      font-size: clamp(1.7rem, 6vw, 2.4rem);
+   }
+}
+
+/* ============================================================
+   FEEL BRASIL — Responsive
+   ============================================================ */
+@media (max-width: 900px) {
+   .feel-body {
+      grid-template-columns: 1fr;
+      gap: 44px;
+   }
+   .feel-video {
+      order: -1;
+   }
+}
+
+@media (max-width: 600px) {
+   .feel-headline {
+      font-size: clamp(1.7rem, 6vw, 2.4rem);
+   }
+   .feel-tags {
+      gap: 8px;
+   }
+   .feel-tag {
+      font-size: 0.78rem;
+      padding: 7px 13px 7px 10px;
+   }
+}

@@ -1,0 +1,101 @@
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+[data-reveal] {
+   opacity: 0;
+   transform: translateY(30px);
+   transition:
+      opacity 0.75s var(--ease),
+      transform 0.75s var(--ease);
+   transition-delay: calc(var(--reveal-delay, 0) * 1ms);
+}
+[data-reveal].revealed {
+   opacity: 1;
+   transform: translateY(0);
+}
+
+/* ============================================================
+   NATURE MOTION — ambient, living background
+   Used by the background blobs behind "Why Travel" / "Feel Brasil".
+   ============================================================ */
+
+/* Soft breathing motion for the radial-gradient blobs — like
+   dappled canopy light drifting slowly. */
+@keyframes blobDrift {
+   0%   { transform: translate(0, 0) scale(1); }
+   50%  { transform: translate(18px, -14px) scale(1.06); }
+   100% { transform: translate(0, 0) scale(1); }
+}
+
+/* ============================================================
+   VIDEO SPOTLIGHT — brasilidade colour pulse
+   The accent frame around the "Why Travel" / "Feel Brasil"
+   videos cycles gently through the flag palette and glows,
+   drawing the eye to the video as the visual centerpiece.
+   ============================================================ */
+@keyframes framePulseGreen {
+   0%, 100% {
+      border-color: var(--green-600);
+      box-shadow: 0 0 0 0 rgba(45, 158, 88, 0);
+   }
+   50% {
+      border-color: var(--gold);
+      box-shadow: 0 12px 36px -10px rgba(249, 176, 0, 0.35);
+   }
+}
+@keyframes framePulseRed {
+   0%, 100% {
+      border-color: var(--red);
+      box-shadow: 0 0 0 0 rgba(200, 16, 46, 0);
+   }
+   50% {
+      border-color: var(--gold);
+      box-shadow: 0 12px 36px -10px rgba(249, 176, 0, 0.35);
+   }
+}
+
+/* Slow, almost imperceptible breathing scale on the video itself,
+   so it feels alive rather than static. */
+@keyframes videoBreathe {
+   0%, 100% { transform: scale(1); }
+   50%      { transform: scale(1.012); }
+}
+
+/* Tiny music-visualizer bars inside the floating badges — a wink
+   at the rhythm of samba, barely-there but full of energy. */
+@keyframes eqBounce {
+   0%, 100% { transform: scaleY(0.35); }
+   50%      { transform: scaleY(1); }
+}
+
+
+/* Endless horizontal scroll for the Copacabana-inspired wave frieze */
+@keyframes waveScroll {
+   from { background-position-x: 0; }
+   to   { background-position-x: 60px; }
+}
+
+/* Gentle pulse for the small divider dots, staggered per colour */
+@keyframes dotPulse {
+   0%, 100% { transform: scale(1); opacity: 0.85; }
+   50%      { transform: scale(1.45); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+   .why-bg__blob,
+   .feel-bg__blob,
+   .why-video__accent,
+   .feel-video__accent,
+   .why-video__frame::before,
+   .feel-video__frame::before,
+   .brasil-wave,
+   .eq-bars span,
+   .why-divider__dot,
+   .feel-divider__dot,
+   .why-video__frame .video-wrap,
+   .feel-video__frame .video-wrap {
+      animation: none !important;
+   }
+}
+

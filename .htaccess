@@ -1,0 +1,13 @@
+Options -Indexes
+RewriteEngine On
+
+# ── Credenciais do banco (preencher no servidor de produção) ──
+# SetEnv DB_HOST localhost
+# SetEnv DB_NAME brasildna
+# SetEnv DB_USER root
+# SetEnv DB_PASS
+
+# ── Redireciona URLs antigas para pages/ ──
+RewriteRule ^news\.php$     /pages/news.php  [R=301,L]
+RewriteRule ^post\.php$     /pages/post.php  [R=301,L]
+RewriteRule ^about-us\.php$ /pages/about-us.php [R=301,L]

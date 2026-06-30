@@ -1,0 +1,46 @@
+/* ============================================================
+   BRASIL DNA — Rebranding 2026
+   Design System: Verde-floresta · Vermelho-hibisco · Ouro-ipê
+   ============================================================ */
+
+:root {
+   /* Palette — brasilidade */
+   --green-900: #012a15;
+   --green-800: #024022;
+   --green-700: #036830;
+   --green-600: #1a7a40;
+   --green-500: #2d9e58;
+   --green-100: #e8f5ec;
+
+   --red: #c8102e; /* vermelho bandeira */
+   --red-dark: #a00c25;
+   --red-light: #e8304a;
+
+   --gold: #f9b000; /* ouro ipê */
+   --gold-light: #ffd14d;
+
+   --blue-flag: #003087; /* azul esfera */
+
+   --sand: #fdf8f0;
+   --sand-deep: #f3ebda;
+   --ink: #0f1f17;
+   --ink-soft: #2c3d32;
+   --white: #ffffff;
+
+   /* Typography */
+   --font-display: "Playfair Display", "Georgia", serif;
+   --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+
+   /* Spacing / layout */
+   --max-w: 1240px;
+   --r-xl: 32px;
+   --r-lg: 20px;
+   --r-md: 12px;
+   --r-sm: 8px;
+
+   --shadow-green: 0 18px 48px -16px rgba(1, 42, 21, 0.4);
+   --shadow-card: 0 8px 32px -12px rgba(1, 42, 21, 0.18);
+   --ease: cubic-bezier(0.25, 0.8, 0.25, 1);
+   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
