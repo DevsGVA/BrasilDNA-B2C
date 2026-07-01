@@ -27,37 +27,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $status          = in_array($_POST['status'] ?? '', ['rascunho', 'publicado'])
                          ? $_POST['status'] : 'rascunho';
     $data_publicacao = !empty($_POST['data_publicacao']) ? $_POST['data_publicacao'] : null;
+
     $imagem = $post['imagem'] ?? null;
 
-    if (!empty($_FILES['imagem_file']['tmp_name'])) {
+if (!empty($_FILES['imagem_file']['name'])) {
     $uploadDir = __DIR__ . '/../uploads/posts/';
 
     if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0755, true);
-    }
+        $erro = 'Pasta de upload não encontrada.';
+    } elseif (!is_writable($uploadDir)) {
+        $erro = 'Sem permissão de escrita na pasta uploads/posts/.';
+    } elseif (!isset($_FILES['imagem_file']['error']) || $_FILES['imagem_file']['error'] !== UPLOAD_ERR_OK) {
+        $uploadErr = $_FILES['imagem_file']['error'] ?? null;
 
-    $ext = strtolower(pathinfo($_FILES['imagem_file']['name'], PATHINFO_EXTENSION));
-    $allowedExts = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-    $allowedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'];
-
-    $finfo = finfo_open(FILEINFO_MIME_TYPE);
-    $mime = finfo_file($finfo, $_FILES['imagem_file']['tmp_name']);
-    finfo_close($finfo);
-
-    if (!in_array($ext, $allowedExts, true) || !in_array($mime, $allowedMimes, true)) {
-        $erro = 'Formato inválido. Use JPG, PNG, GIF ou WebP.';
-    } elseif ($_FILES['imagem_file']['size'] > 5 * 1024 * 1024) {
-        $erro = 'Imagem muito grande. Máximo 5 MB.';
+        $erro = match ($uploadErr) {
+            UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE => 'Imagem muito grande.',
+            UPLOAD_ERR_PARTIAL => 'Upload parcial da imagem.',
+            UPLOAD_ERR_NO_FILE => 'Nenhuma imagem foi enviada.',
+            UPLOAD_ERR_NO_TMP_DIR => 'Pasta temporária ausente no servidor.',
+            UPLOAD_ERR_CANT_WRITE => 'Falha ao gravar o arquivo no disco.',
+            UPLOAD_ERR_EXTENSION => 'Uma extensão do PHP bloqueou o upload.',
+            default => 'Erro no upload da imagem: ' . $uploadErr,
+        };
     } else {
-        $filename = uniqid('img_') . '.' . $ext;
-        $destino = $uploadDir . $filename;
+        $ext = strtolower(pathinfo($_FILES['imagem_file']['name'], PATHINFO_EXTENSION));
+        $allowedExts = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+        $allowedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'];
 
-        if (move_uploaded_file($_FILES['imagem_file']['tmp_name'], $destino)) {
-            $imagem = 'uploads/posts/' . $filename;
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime = finfo_file($finfo, $_FILES['imagem_file']['tmp_name']);
+        finfo_close($finfo);
+
+        if (!in_array($ext, $allowedExts, true) || !in_array($mime, $allowedMimes, true)) {
+            $erro = 'Formato inválido. Use JPG, PNG, GIF ou WebP.';
+        } elseif ($_FILES['imagem_file']['size'] > 5 * 1024 * 1024) {
+            $erro = 'Imagem muito grande. Máximo 5 MB.';
         } else {
-            $erro = 'Falha ao salvar a imagem no servidor.';
-            error_log('[BrasilDNA] move_uploaded_file falhou: ' . $destino);
+            $filename = uniqid('img_') . '.' . $ext;
+            $destino = $uploadDir . $filename;
+
+            if (move_uploaded_file($_FILES['imagem_file']['tmp_name'], $destino)) {
+                @chmod($destino, 0644);
+                $imagem = 'uploads/posts/' . $filename;
+            } else {
+                $erro = 'Falha ao salvar a imagem no servidor.';
+            }
         }
+    }
+} else {
+    $urlInput = trim($_POST['imagem_url'] ?? '');
+    if ($urlInput !== '' && filter_var($urlInput, FILTER_VALIDATE_URL)) {
+        $imagem = $urlInput;
     }
 }
 

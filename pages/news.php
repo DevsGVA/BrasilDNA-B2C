@@ -65,7 +65,7 @@ require_once __DIR__ . '/../includes/site-header.php';
 </section>
 
 <!-- ===== FILTROS ===== -->
-<div class="news-filter-bar">
+<!-- <div class="news-filter-bar">
   <div class="container">
     <div class="news-filters" role="group" aria-label="Filtrar por região">
       <button class="filter-btn is-active" data-filter="all">Todos</button>
@@ -76,7 +76,7 @@ require_once __DIR__ . '/../includes/site-header.php';
       <button class="filter-btn" data-filter="Norte">Norte</button>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- ===== NEWS LISTING ===== -->
 <section class="news-page-section">
