@@ -1,10 +1,18 @@
 <?php
 /**
  * Brasil DNA — Home (Rebranding 2026)
- * Layout estático em PHP para fácil integração futura.
  */
 function esc_url_safe($path) {
     return htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
+}
+
+// Resolve caminho relativo do banco para URL absoluta
+function asset_url(string $path): string {
+    if (!$path) return '';
+    if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+        return htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
+    }
+    return htmlspecialchars(BASE_URL . ltrim($path, '/'), ENT_QUOTES, 'UTF-8');
 }
 
 $banners_parceiros = [];
@@ -128,8 +136,6 @@ require_once __DIR__ . '/includes/site-header.php';
 <!-- ===== WHY TRAVEL ===== -->
 <section class="section why" id="why">
 
-  <!-- Top frieze — a nod to Copacabana's iconic wave-mosaic promenade,
-       rendered in the brand palette and gently scrolling -->
   <div class="brasil-wave brasil-wave--why" aria-hidden="true"></div>
 
   <div class="why-bg" aria-hidden="true">
@@ -140,11 +146,9 @@ require_once __DIR__ . '/includes/site-header.php';
 
   <div class="container">
 
-    <!-- Top: label + headline centered -->
     <div class="why-header" data-reveal>
       <span class="label-tag">Why Travel to Brazil?</span>
       <h2 class="why-headline">A force that touches the heart<br>and <em>awakens the senses</em></h2>
-      <!-- Decorative divider -->
       <div class="why-divider" aria-hidden="true">
         <span class="why-divider__line"></span>
         <span class="why-divider__dot why-divider__dot--green"></span>
@@ -154,10 +158,8 @@ require_once __DIR__ . '/includes/site-header.php';
       </div>
     </div>
 
-    <!-- Mid: video + text side by side -->
     <div class="why-body">
       <div class="why-video" data-reveal>
-        <!-- Floating badge -->
         <div class="why-video__badge" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           <span>Travellers' Choice</span>
@@ -181,7 +183,6 @@ require_once __DIR__ . '/includes/site-header.php';
         <p class="why-lead">Brazil is more than a destination — it's the rhythm of samba at twilight, the stillness of a jaguar in the wild, the warmth of a shared moqueca, and the roar of waterfalls that remind us how small we are — yet how connected we can be.</p>
         <p>Through <strong>Brasil DNA</strong>, you're invited to step into a curated journey across four breathtaking regions, each revealing a facet of Brazil's identity rooted in <strong>nature, culture, and purposeful travel</strong>.</p>
 
-        <!-- Proof points — each with distinct colour accent -->
         <div class="why-proofs">
           <div class="why-proof why-proof--green">
             <div class="why-proof__icon">
@@ -214,7 +215,6 @@ require_once __DIR__ . '/includes/site-header.php';
       </div>
     </div>
 
-    <!-- Bottom: stat strip — dark green, rich -->
     <div class="why-stats" data-reveal data-reveal-delay="200">
       <div class="why-stats__bg" aria-hidden="true"></div>
       <div class="why-stat">
@@ -290,7 +290,6 @@ require_once __DIR__ . '/includes/site-header.php';
 <!-- ===== FEEL BRASIL ===== -->
 <section class="section feel" id="feel">
 
-  <!-- Subtle background blobs (echo of Why Travel) -->
   <div class="feel-bg" aria-hidden="true">
     <div class="feel-bg__blob feel-bg__blob--1"></div>
     <div class="feel-bg__blob feel-bg__blob--2"></div>
@@ -298,11 +297,9 @@ require_once __DIR__ . '/includes/site-header.php';
 
   <div class="container">
 
-    <!-- Centered header — mirrors Why Travel's structure -->
     <div class="feel-header" data-reveal>
       <span class="label-tag">Feel Brasil</span>
       <h2 class="feel-headline">Discover Brazil through<br><em>authentic experiences</em></h2>
-      <!-- Divider: same dots, reversed colour order for individuality -->
       <div class="feel-divider" aria-hidden="true">
         <span class="feel-divider__line"></span>
         <span class="feel-divider__dot feel-divider__dot--red"></span>
@@ -312,15 +309,12 @@ require_once __DIR__ . '/includes/site-header.php';
       </div>
     </div>
 
-    <!-- Body: text left + framed video right (side-by-side like Why Travel) -->
     <div class="feel-body">
 
-      <!-- Text column -->
       <div class="feel-text" data-reveal>
         <p class="feel-lead">Created by <strong>Embratur</strong>, the <strong>Feel Brasil</strong> initiative highlights authentic travel experiences across the country — curated journeys that connect visitors with Brazil's nature, culture, communities, and traditions.</p>
         <p>Travelers can discover immersive activities such as exploring protected natural areas, experiencing local gastronomy, and engaging with community-based tourism.</p>
 
-        <!-- Feature tags — unique to Feel (pill chips, not proof cards) -->
         <div class="feel-tags">
           <span class="feel-tag feel-tag--green">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -339,7 +333,6 @@ require_once __DIR__ . '/includes/site-header.php';
         <a href="https://www.embratur.com.br" target="_blank" rel="noopener" class="btn btn-primary">Learn More</a>
       </div>
 
-      <!-- Video column — echoes Why's accent frame, badge swapped for Embratur label -->
       <div class="feel-video" data-reveal data-reveal-delay="120">
         <div class="feel-video__label" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
@@ -360,11 +353,10 @@ require_once __DIR__ . '/includes/site-header.php';
         <p class="feel-video__caption">Meet the Brasil DNA 2026 Partners</p>
       </div>
 
-    </div><!-- /.feel-body -->
+    </div>
 
   </div>
 
-  <!-- Bottom frieze — mirrors Why's wave, scrolling the opposite way -->
   <div class="brasil-wave brasil-wave--feel" aria-hidden="true"></div>
 
 </section>
@@ -388,14 +380,14 @@ require_once __DIR__ . '/includes/site-header.php';
           <article class="partner-card" data-reveal <?= $_pi > 0 ? 'data-reveal-delay="' . ($_pi * 120) . '"' : '' ?>>
             <div class="partner-card__cover">
               <?php if (!empty($_p['imagem_fundo'])): ?>
-                <img src="<?= htmlspecialchars($_p['imagem_fundo']) ?>" alt="<?= htmlspecialchars($_p['titulo']) ?>" loading="lazy">
+                <img src="<?= asset_url($_p['imagem_fundo']) ?>" alt="<?= htmlspecialchars($_p['titulo']) ?>" loading="lazy">
               <?php endif; ?>
               <div class="partner-card__cover-overlay"></div>
             </div>
             <div class="partner-card__top">
               <div class="partner-icon">
                 <?php if (!empty($_p['logo'])): ?>
-                  <img src="<?= htmlspecialchars($_p['logo']) ?>" alt="<?= htmlspecialchars($_p['titulo']) ?>" style="width:68px;height:68px;object-fit:contain;">
+                  <img src="<?= asset_url($_p['logo']) ?>" alt="<?= htmlspecialchars($_p['titulo']) ?>" style="width:68px;height:68px;object-fit:contain;">
                 <?php else: ?>
                   <svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/></svg>
                 <?php endif; ?>
@@ -461,7 +453,6 @@ $_totalPartners = count($destinos_home);
 ?>
 <section class="section clients" id="clients">
 
-  <!-- Painel esquerdo: vídeo vertical -->
   <div class="clients-video-panel">
     <video autoplay muted loop playsinline preload="none" aria-hidden="true">
       <source src="assets/video/video-horizzo.mp4" type="video/mp4">
@@ -478,11 +469,8 @@ $_totalPartners = count($destinos_home);
     </div>
   </div>
 
-  <!-- Painel direito: conteúdo -->
   <div class="clients-left">
     <div class="clients-left-inner">
-
-      <!-- Mosaico de parceiros -->
       <div class="clients-mosaic">
 
         <?php
@@ -496,7 +484,7 @@ $_totalPartners = count($destinos_home);
              data-modal-trigger
              data-id="<?= (int) $c['id'] ?>"
              data-name="<?= htmlspecialchars($c['titulo']) ?>"
-             data-logo="<?= htmlspecialchars($c['logo'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+             data-logo="<?= asset_url($c['logo'] ?? '') ?>"
              data-desc="<?= htmlspecialchars($c['descricao'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
              data-site="<?= htmlspecialchars($c['link_guia'] ?: $c['site'] ?: '', ENT_QUOTES, 'UTF-8') ?>"
              <?php if (!empty($c['iframe'])): ?>data-iframe="<?= htmlspecialchars($c['iframe'], ENT_QUOTES, 'UTF-8') ?>"<?php endif; ?>
@@ -505,13 +493,13 @@ $_totalPartners = count($destinos_home);
              <?php if (!empty($c['linkedin'])): ?>data-linkedin="<?= htmlspecialchars($c['linkedin'], ENT_QUOTES, 'UTF-8') ?>"<?php endif; ?>
              <?php if (!empty($c['youtube'])): ?>data-youtube="<?= htmlspecialchars($c['youtube'], ENT_QUOTES, 'UTF-8') ?>"<?php endif; ?>>
           <?php if ($hasFundo): ?>
-            <img class="client-card__bg" src="<?= htmlspecialchars($c['imagem_fundo'], ENT_QUOTES, 'UTF-8') ?>" alt="" loading="lazy" aria-hidden="true">
+            <img class="client-card__bg" src="<?= asset_url($c['imagem_fundo']) ?>" alt="" loading="lazy" aria-hidden="true">
           <?php endif; ?>
           <div class="client-card__overlay"></div>
           <span class="client-card__plus" aria-hidden="true">+</span>
           <div class="client-card__body">
             <?php if ($c['logo']): ?>
-              <img class="client-card__logo-upload" src="<?= htmlspecialchars($c['logo'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($c['titulo']) ?>" loading="lazy">
+              <img class="client-card__logo-upload" src="<?= asset_url($c['logo']) ?>" alt="<?= htmlspecialchars($c['titulo']) ?>" loading="lazy">
             <?php else: ?>
               <div class="client-logo-initials"><?= htmlspecialchars(mb_strtoupper(mb_substr($c['titulo'], 0, 2, 'UTF-8'), 'UTF-8')) ?></div>
             <?php endif; ?>
@@ -520,10 +508,9 @@ $_totalPartners = count($destinos_home);
         </div>
         <?php endforeach; ?>
 
-      </div><!-- /.clients-mosaic -->
-    </div><!-- /.clients-left-inner -->
-  </div><!-- /.clients-left -->
-
+      </div>
+    </div>
+  </div>
 
 </section>
 
@@ -543,14 +530,14 @@ $_totalPartners = count($destinos_home);
       <?php foreach ($posts_home as $_pi => $_p):
         $postLink = BASE_URL . 'pages/post.php?id=' . (int) $_p['id'];
         $postDate = !empty($_p['data_publicacao']) ? date('d/m/Y', strtotime($_p['data_publicacao'])) : '';
-        $delay = $_pi * 80;
-        $imgSrc = trim((string)($_p['imagem'] ?? ''));
-        $imgAlt = htmlspecialchars((string)($_p['titulo'] ?? ''), ENT_QUOTES, 'UTF-8');
+        $delay    = $_pi * 80;
+        $imgSrc   = trim((string)($_p['imagem'] ?? ''));
+        $imgAlt   = htmlspecialchars((string)($_p['titulo'] ?? ''), ENT_QUOTES, 'UTF-8');
       ?>
         <article class="news-card" data-reveal<?= $delay ? ' data-reveal-delay="' . $delay . '"' : '' ?>>
           <a href="<?= esc_url_safe($postLink) ?>" class="news-img-link">
             <?php if ($imgSrc !== ''): ?>
-              <img src="<?= esc_url_safe($imgSrc) ?>" alt="<?= $imgAlt ?>" loading="lazy">
+              <img src="<?= asset_url($imgSrc) ?>" alt="<?= $imgAlt ?>" loading="lazy">
             <?php else: ?>
               <div class="news-img-placeholder"></div>
             <?php endif; ?>
@@ -578,29 +565,6 @@ $_totalPartners = count($destinos_home);
 <?php if (!empty($banners_pool)): $adB = $banners_pool[$_bannerAdIdx++ % count($banners_pool)]; ?>
 <div class="banner-ad-slot"><div class="container" data-reveal><?php renderBannerAd($adB); ?></div></div>
 <?php endif; ?>
-<!-- PARTNER BANNERS CAROUSEL REMOVIDO — slots de propaganda espalhados na página -->
-
-<!-- ===== NEWSLETTER ===== -->
-<!-- <section class="newsletter" id="newsletter">
-  <div class="nl-bg" aria-hidden="true"></div>
-  <div class="container newsletter-inner" data-reveal>
-    <div class="nl-text">
-      <span class="label-tag label-tag--light">Stay in the Loop</span>
-      <h2>Receive <em>Brasil DNA</em> stories directly in your inbox</h2>
-      <p>Subscribe and receive news and exclusive content from the heart of Brazil.</p>
-    </div>
-    <form class="nl-form" action="#" method="post" autocomplete="off">
-      <div class="nl-row">
-        <input type="text"  name="first_name" placeholder="First Name" required>
-        <input type="text"  name="last_name"  placeholder="Last Name"  required>
-      </div>
-      <div class="nl-row">
-        <input type="email" name="email" placeholder="Your e-mail" required>
-        <button type="submit" class="btn btn-primary">Subscribe</button>
-      </div>
-    </form>
-  </div>
-</section> -->
 
 <!-- ===== CLIENT MODAL ===== -->
 <div id="clientModal" class="client-modal" role="dialog" aria-modal="true"
@@ -609,7 +573,6 @@ $_totalPartners = count($destinos_home);
   <div class="client-modal__panel">
     <button class="client-modal__close" aria-label="Fechar">&#x2715;</button>
 
-    <!-- Coluna esquerda: vídeo + logo + redes -->
     <div class="client-modal__left">
       <div id="clientModalVideo" class="client-modal__video-wrap" hidden></div>
       <div class="client-modal__logo-wrap">
@@ -632,7 +595,6 @@ $_totalPartners = count($destinos_home);
       </div>
     </div>
 
-    <!-- Coluna direita: título + descrição + link -->
     <div class="client-modal__right">
       <h2 id="clientModalName" class="client-modal__name"></h2>
       <p id="clientModalDesc" class="client-modal__desc"></p>
@@ -650,14 +612,12 @@ document.addEventListener('click', function(e) {
   var base = window.SITE_BASE || '/';
   var fd, id;
 
-  // Modal destinos
   var card = e.target.closest('[data-modal-trigger]');
   if (card && card.dataset.id) {
     fd = new FormData(); fd.append('id', card.dataset.id);
     fetch(base + 'pages/cliente-click.php', { method: 'POST', body: fd });
   }
 
-  // Link Explore parceiros
   var link = e.target.closest('[data-cliente-id]');
   if (link && link.dataset.clienteId) {
     fd = new FormData(); fd.append('id', link.dataset.clienteId);
