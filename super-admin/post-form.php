@@ -346,9 +346,9 @@ tinymce.init({
   menubar: true,
   plugins: 'link lists image table code autolink preview searchreplace wordcount emoticons',
   toolbar: 'undo redo | styleselect | bold italic underline | ' +
-           'alignleft aligncenter alignright alignjustify | ' +
-           'bullist numlist outdent indent | link image table | code | ' +
-           'searchreplace preview emoticons | coluna2',
+         'alignleft aligncenter alignright alignjustify | ' +
+         'bullist numlist outdent indent | link image table | code | ' +
+         'searchreplace preview emoticons | col_texto_img col_img_texto col_2img col_3img',
   content_style: `
     body { font-family: Inter, sans-serif; font-size: 15px; }
 
@@ -378,25 +378,66 @@ tinymce.init({
   convert_urls: true,
 
   // Botão customizado: insere bloco de texto + imagem lado a lado
-  setup: function (editor) {
-    editor.ui.registry.addButton('coluna2', {
-      text: '⬛ Texto + Imagem',
-      tooltip: 'Inserir bloco: texto à esquerda, imagem à direita',
-      onAction: function () {
-        editor.insertContent(`
-          <div class="layout-cols">
-            <div class="col-text">
-              <p>Digite o texto aqui...</p>
-            </div>
-            <div class="col-img">
-              <img src="" alt="Descrição da imagem" />
-            </div>
-          </div>
-          <p></p>
-        `);
-      }
-    });
-  },
+ setup: function (editor) {
+
+  // 📌 Texto à esquerda + Imagem à direita
+  editor.ui.registry.addButton('col_texto_img', {
+    text: '▤ Texto | Img',
+    tooltip: 'Texto à esquerda, imagem à direita',
+    onAction: function () {
+      editor.insertContent(`
+        <div class="layout-cols">
+          <div class="col-text"><p>Digite o texto aqui...</p></div>
+          <div class="col-img"><img src="" alt="Imagem" /></div>
+        </div><p></p>
+      `);
+    }
+  });
+
+  // 📌 Imagem à esquerda + Texto à direita
+  editor.ui.registry.addButton('col_img_texto', {
+    text: '▤ Img | Texto',
+    tooltip: 'Imagem à esquerda, texto à direita',
+    onAction: function () {
+      editor.insertContent(`
+        <div class="layout-cols">
+          <div class="col-img"><img src="" alt="Imagem" /></div>
+          <div class="col-text"><p>Digite o texto aqui...</p></div>
+        </div><p></p>
+      `);
+    }
+  });
+
+  // 📌 Duas imagens lado a lado
+  editor.ui.registry.addButton('col_2img', {
+    text: '▤ Img | Img',
+    tooltip: 'Duas imagens lado a lado',
+    onAction: function () {
+      editor.insertContent(`
+        <div class="layout-cols">
+          <div class="col-img"><img src="" alt="Imagem 1" /></div>
+          <div class="col-img"><img src="" alt="Imagem 2" /></div>
+        </div><p></p>
+      `);
+    }
+  });
+
+  // 📌 Três imagens lado a lado
+  editor.ui.registry.addButton('col_3img', {
+    text: '▦ 3 Imgs',
+    tooltip: 'Três imagens lado a lado',
+    onAction: function () {
+      editor.insertContent(`
+        <div class="layout-cols">
+          <div class="col-img"><img src="" alt="Imagem 1" /></div>
+          <div class="col-img"><img src="" alt="Imagem 2" /></div>
+          <div class="col-img"><img src="" alt="Imagem 3" /></div>
+        </div><p></p>
+      `);
+    }
+  });
+
+},
 
   images_upload_handler: function (blobInfo, progress) {
     return new Promise(function (resolve, reject) {
