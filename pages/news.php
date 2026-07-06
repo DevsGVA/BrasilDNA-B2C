@@ -27,13 +27,14 @@ $defaultImg = 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=70
 function postImage(array $post, array $map, string $default): string {
     $saved = trim($post['imagem'] ?? '');
     if ($saved !== '') {
-        // URL absoluta: usa direto
+        // URL absoluta: retorna direto
         if (str_starts_with($saved, 'http://') || str_starts_with($saved, 'https://')) {
             return htmlspecialchars($saved, ENT_QUOTES, 'UTF-8');
         }
-        // Caminho relativo: prefixo com BASE_URL
+        // Caminho relativo: concatena BASE_URL
         return htmlspecialchars(BASE_URL . ltrim($saved, '/'), ENT_QUOTES, 'UTF-8');
     }
+    // Sem imagem: fallback por região ou padrão
     return $map[$post['regiao'] ?? ''] ?? $default;
 }
 
@@ -67,6 +68,20 @@ require_once __DIR__ . '/../includes/site-header.php';
     <p class="page-hero-lead">Stories, guides, and insights from the heart of Brazil.</p>
   </div>
 </section>
+
+<!-- ===== FILTROS ===== -->
+<!-- <div class="news-filter-bar">
+  <div class="container">
+    <div class="news-filters" role="group" aria-label="Filtrar por região">
+      <button class="filter-btn is-active" data-filter="all">Todos</button>
+      <button class="filter-btn" data-filter="Nordeste">Nordeste</button>
+      <button class="filter-btn" data-filter="Centro-Oeste">Centro-Oeste</button>
+      <button class="filter-btn" data-filter="Sul">Sul</button>
+      <button class="filter-btn" data-filter="Sudeste">Sudeste</button>
+      <button class="filter-btn" data-filter="Norte">Norte</button>
+    </div>
+  </div>
+</div> -->
 
 <!-- ===== NEWS LISTING ===== -->
 <section class="news-page-section">
