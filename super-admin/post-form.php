@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (!empty($_FILES['imagem_file']['tmp_name'])) {
-        $uploadBase = dirname(__DIR__) . '/uploads';
+        $uploadBase = dirname(__DIR__) . '/uploads/posts';
         $uploadDir  = $uploadBase . '/';
         $ext        = strtolower(pathinfo($_FILES['imagem_file']['name'], PATHINFO_EXTENSION));
         $allowedExts  = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $destino  = $uploadDir . $filename;
 
                 if (move_uploaded_file($_FILES['imagem_file']['tmp_name'], $destino)) {
-                    $imagem = 'uploads/' . $filename;
+                    $imagem = 'uploads/posts/' . $filename;
                 } else {
                     $erro = 'Falha ao salvar a imagem no servidor.';
                 }
@@ -192,6 +192,10 @@ $vRegiao   = $_POST['regiao'] ?? ($post['regiao'] ?? '');
 $vStatus   = $_POST['status'] ?? ($post['status'] ?? 'rascunho');
 $vData     = $_POST['data_publicacao'] ?? ($post['data_publicacao'] ?? date('Y-m-d'));
 $vImagem   = $post['imagem'] ?? ($_POST['imagem_atual'] ?? '');
+
+// URL base dinâmica — funciona em qualquer domínio sem alterar o código
+$baseUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http')
+         . '://' . $_SERVER['HTTP_HOST'];
 
 $pageTitle   = $id !== null ? 'Editar post' : 'Criar post';
 $paginaAtiva = 'posts';
@@ -334,6 +338,7 @@ document.getElementById('imagem-upload').addEventListener('change', function() {
 
   reader.readAsDataURL(file);
 });
+
 tinymce.init({
   license_key: 'gpl',
   selector: '#editor',
@@ -343,14 +348,80 @@ tinymce.init({
   toolbar: 'undo redo | styleselect | bold italic underline | ' +
            'alignleft aligncenter alignright alignjustify | ' +
            'bullist numlist outdent indent | link image table | code | ' +
-           'searchreplace preview emoticons',
-  content_style: 'body { font-family: Inter, sans-serif; font-size: 15px; }',
-  images_upload_url: '/BrasilDNA-Website/admin/upload_image.php',
+           'searchreplace preview emoticons | coluna2',
+  content_style: `
+    body { font-family: Inter, sans-serif; font-size: 15px; }
+
+    /* Layout de colunas dentro do editor */
+    .layout-cols {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      margin: 16px 0;
+    }
+    .layout-cols .col-text { flex: 1; min-width: 0; }
+    .layout-cols .col-img  { flex: 0 0 40%; }
+    .layout-cols .col-img img { width: 100%; height: auto; border-radius: 6px; }
+
+    /* Mobile: empilha as colunas */
+    @media (max-width: 640px) {
+      .layout-cols { flex-direction: column; }
+      .layout-cols .col-img { flex: 0 0 100%; }
+    }
+  `,
+  // URL dinâmica: funciona em qualquer domínio
+  images_upload_url: '<?= $baseUrl ?>/super-admin/upload_image.php',
   automatic_uploads: true,
   paste_data_images: true,
   relative_urls: false,
   remove_script_host: false,
   convert_urls: true,
+
+  // Botão customizado: insere bloco de texto + imagem lado a lado
+  setup: function (editor) {
+    editor.ui.registry.addButton('coluna2', {
+      text: '⬛ Texto + Imagem',
+      tooltip: 'Inserir bloco: texto à esquerda, imagem à direita',
+      onAction: function () {
+        editor.insertContent(`
+          <div class="layout-cols">
+            <div class="col-text">
+              <p>Digite o texto aqui...</p>
+            </div>
+            <div class="col-img">
+              <img src="" alt="Descrição da imagem" />
+            </div>
+          </div>
+          <p></p>
+        `);
+      }
+    });
+  },
+
+  images_upload_handler: function (blobInfo, progress) {
+    return new Promise(function (resolve, reject) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '<?= $baseUrl ?>/super-admin/upload_image.php');
+      xhr.upload.onprogress = function (e) {
+        progress(e.loaded / e.total * 100);
+      };
+      xhr.onload = function () {
+        if (xhr.status !== 200) { reject('Erro HTTP: ' + xhr.status); return; }
+        var json;
+        try { json = JSON.parse(xhr.responseText); } catch (e) {
+          reject('Resposta inválida do servidor.'); return;
+        }
+        if (!json || typeof json.location !== 'string') {
+          reject(json && json.error ? json.error : 'Upload falhou.'); return;
+        }
+        resolve(json.location);
+      };
+      xhr.onerror = function () { reject('Erro de rede ao enviar imagem.'); };
+      var formData = new FormData();
+      formData.append('file', blobInfo.blob(), blobInfo.filename());
+      xhr.send(formData);
+    });
+  }
 });
 </script>
 
