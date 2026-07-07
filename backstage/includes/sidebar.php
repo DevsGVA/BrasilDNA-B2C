@@ -97,13 +97,6 @@ $isSuperAdmin = ehSuperAdmin();
         Banners
       </a>
 
-      <a href="<?= $adminBase ?>parceiros.php" class="adm-sidebar__link <?= $paginaAtiva === 'parceiros' ? 'is-active' : '' ?>">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-        </svg>
-        Parceiros
-      </a>
-
       <a href="<?= $adminBase ?>../clientes/" class="adm-sidebar__link <?= $paginaAtiva === 'clientes' ? 'is-active' : '' ?>">
         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
@@ -124,7 +117,7 @@ $isSuperAdmin = ehSuperAdmin();
     </nav>
 
     <div class="adm-sidebar__bottom">
-      <a href="<?= BASE_URL ?>index.php" target="_blank" rel="noopener" class="adm-sidebar__ver-site">
+      <a href="https://brasildna.com" target="_blank" rel="noopener" class="adm-sidebar__ver-site">
         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
         </svg>
