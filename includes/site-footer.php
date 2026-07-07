@@ -7,7 +7,7 @@ $v_js = file_exists(__DIR__ . '/../assets/main.js') ? filemtime(__DIR__ . '/../a
   <div class="container footer-top">
     <div class="footer-brand">
       <img src="<?= BASE_URL ?>assets/images/logo_brasilDNA_branco.png"
-           alt="Brasil DNA" class="footer-logo" height="40" loading="lazy">
+           alt="Brasil DNA" class="footer-logo" height="80" loading="lazy">
       <p>Experience the Essence of Brazil.</p>
       <div class="social-links">
         <a href="https://www.facebook.com/brasildna" target="_blank" rel="noopener" aria-label="Facebook">
@@ -44,14 +44,14 @@ $v_js = file_exists(__DIR__ . '/../assets/main.js') ? filemtime(__DIR__ . '/../a
         <img src="<?= BASE_URL ?>assets/images/embratur.png" alt="" loading="lazy">
         <!-- <span class="embratur-wordmark"></span> -->
       </div>
-      <img src="<?= BASE_URL ?>assets/images/Logotipo_Ministerio.png" alt="Ministério do Turismo" loading="lazy">
+      <img src="<?= BASE_URL ?>assets/images/ministerio-do-turismo.png" alt="Ministério do Turismo" loading="lazy">
     </div>
   </div>
 
   <div class="footer-bottom">
     <div class="container painel">
-      <p>&copy; <?= date('Y') ?> Brasil DNA. All rights reserved.</p>
-      <a href="<?= BASE_URL ?>admin/login.php">Administrative Panel</a>
+      <p>&copy; <?= date('Y') ?> Brasil DNA. All rights reserved.
+      <a style="color:#fff" href="<?= BASE_URL ?>admin/login.php">Administrative Panel</a></p>
     </div>
   </div>
 </footer>

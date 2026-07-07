@@ -89,7 +89,7 @@ require_once __DIR__ . '/../includes/site-header.php';
 
     <div class="pillar-deep-media" data-reveal>
       <div class="pillar-deep-badge" style="background:var(--red);">A</div>
-      <img src="https://bureaumundo.com/wp-content/uploads/2026/05/Bahia-Brasil-DNA-2026-2.png?w=1000&q=80"
+      <img src="/../assets/images/hospitalidade.png?w=1000&q=80"
            alt="Sorriso caloroso e hospitalidade brasileira" loading="lazy">
       <p class="pillar-deep-quote">"Hospitality is a natural expression of everyday life."</p>
     </div>
@@ -140,7 +140,7 @@ require_once __DIR__ . '/../includes/site-header.php';
 
     <div class="pillar-deep-media" data-reveal>
       <div class="pillar-deep-badge" style="background:var(--gold);color:var(--ink);">G</div>
-      <img src="https://bureaumundo.com/wp-content/uploads/2025/09/Moqueca_de_camarao-Foto_Rosilda_Cruz-97-1-scaled.jpg?w=1000&q=80"
+      <img src="/../assets/images/gastronomia.jpg?w=1000&q=80"
            alt="Gastronomia brasileira colorida e diversa" loading="lazy">
       <p class="pillar-deep-quote">"A perfect marriage of nourishment and narrative."</p>
     </div>
@@ -191,7 +191,7 @@ require_once __DIR__ . '/../includes/site-header.php';
 
     <div class="pillar-deep-media" data-reveal>
       <div class="pillar-deep-badge" style="background:var(--green-700);">C</div>
-      <img src="https://bureaumundo.com/wp-content/uploads/2026/06/Sp-Aparecida-do-Norte.jpg?w=1000&q=80"
+      <img src="/../assets/images/cultura.jpg?w=1000&q=80"
            alt="Cultura e arte de rua brasileira vibrante" loading="lazy">
       <p class="pillar-deep-quote">"History meets innovation, diversity is identity."</p>
     </div>
@@ -242,7 +242,7 @@ require_once __DIR__ . '/../includes/site-header.php';
 
     <div class="pillar-deep-media" data-reveal>
       <div class="pillar-deep-badge" style="background:var(--blue-flag);">T</div>
-      <img src="https://bureaumundo.com/wp-content/uploads/2024/11/Abismo-Anhumas-Creditos-Site-Abismo-Anhumas-1.jpg?w=1000&q=80"
+      <img src="/../assets/images/tesouros.jpg?w=1000&q=80"
            alt="Pantanal e biodiversidade dos tesouros naturais do Brasil" loading="lazy">
       <p class="pillar-deep-quote">"Nature's masterpiece, boundless and alive."</p>
     </div>
