@@ -141,6 +141,20 @@ $vLogo     = $banner['logo_url']            ?? '';
 $vImagem   = $banner['imagem_url']          ?? '';
 $vImagemV  = $banner['imagem_vertical_url'] ?? '';
 
+// Resolve o caminho para exibir no backstage (os arquivos ficam em /uploads/ na raiz)
+// O banco guarda 'uploads/filename.jpg', o backstage está em /backstage/
+// então precisamos prefixar com '../' para sair de /backstage/ e chegar na raiz.
+function backstageImgUrl(string $path): string {
+    if (!$path) return '';
+    // Se já for URL absoluta, retorna como está
+    if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+        return htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
+    }
+    // Caminho relativo salvo no banco (ex: 'uploads/logo_xxx.jpg')
+    // Prefixamos com '../' para resolver a partir de /backstage/
+    return htmlspecialchars('../' . ltrim($path, '/'), ENT_QUOTES, 'UTF-8');
+}
+
 $pageTitle   = $id !== null ? 'Editar Banner' : 'Novo Banner';
 $paginaAtiva = 'banners';
 require_once __DIR__ . '/includes/sidebar.php';
@@ -196,7 +210,7 @@ require_once __DIR__ . '/includes/sidebar.php';
       <div class="post-side-section">
         <div class="post-side-label">Logo do parceiro</div>
         <?php if ($vLogo): ?>
-          <img id="logo-preview" src="<?= htmlspecialchars($vLogo, ENT_QUOTES, 'UTF-8') ?>"
+          <img id="logo-preview" src="<?= backstageImgUrl($vLogo) ?>"
                alt="Logo atual" style="width:100%;border-radius:8px;margin-bottom:10px;object-fit:contain;max-height:80px;background:#012a15;padding:8px;">
         <?php else: ?>
           <img id="logo-preview" src="" alt="" style="display:none;width:100%;border-radius:8px;margin-bottom:10px;object-fit:contain;max-height:80px;background:#012a15;padding:8px;">
@@ -217,7 +231,7 @@ require_once __DIR__ . '/includes/sidebar.php';
           <span style="font-size:.75rem;color:var(--text-muted);font-weight:400;"> — Desktop (horizontal)</span>
         </div>
         <?php if ($vImagem): ?>
-          <img id="bg-preview" src="<?= htmlspecialchars($vImagem, ENT_QUOTES, 'UTF-8') ?>"
+          <img id="bg-preview" src="<?= backstageImgUrl($vImagem) ?>"
                alt="Fundo atual" style="width:100%;border-radius:8px;margin-bottom:10px;object-fit:cover;max-height:100px;">
         <?php else: ?>
           <img id="bg-preview" src="" alt="" style="display:none;width:100%;border-radius:8px;margin-bottom:10px;object-fit:cover;max-height:100px;">
@@ -240,7 +254,7 @@ require_once __DIR__ . '/includes/sidebar.php';
         <p style="font-size:.78rem;color:var(--text-muted);margin-bottom:8px;line-height:1.4;"
            >Exibida em telas estreitas no lugar da imagem horizontal. Recomendado: proporção 1:1 (ex: 800×800 px).</p>
         <?php if ($vImagemV): ?>
-          <img id="bgm-preview" src="<?= htmlspecialchars($vImagemV, ENT_QUOTES, 'UTF-8') ?>"
+          <img id="bgm-preview" src="<?= backstageImgUrl($vImagemV) ?>"
                alt="Mobile atual" style="width:100%;border-radius:8px;margin-bottom:10px;object-fit:cover;max-height:100px;">
         <?php else: ?>
           <img id="bgm-preview" src="" alt="" style="display:none;width:100%;border-radius:8px;margin-bottom:10px;object-fit:cover;max-height:100px;">
