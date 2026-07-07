@@ -3,13 +3,9 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require_once __DIR__ . '/../includes/conexao.php';
-
-require_once __DIR__ . '/../admin/includes/auth.php';
-
-if (empty($_SESSION['admin_id'])) {
-    header('Location: ../admin/login.php');
-    exit;
-}
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../backstage/includes/auth.php';
+exigirLogin();
 
 $id      = isset($_GET['id']) && ctype_digit($_GET['id']) ? (int) $_GET['id'] : null;
 $cliente = null;
@@ -32,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $regiao    = trim($_POST['regiao']     ?? '');
     $descricao = trim($_POST['descricao']  ?? '');
     $iframe    = trim($_POST['iframe']     ?? '');
-    // Aceita URL do YouTube (youtu.be ou youtube.com) e converte para embed URL
     if ($iframe !== '' && !str_starts_with($iframe, '<')) {
         if (preg_match('#(?:youtu\.be/|youtube\.com/(?:watch\?v=|embed/|shorts/))([a-zA-Z0-9_-]{11})#', $iframe, $_m)) {
             $iframe = 'https://www.youtube.com/embed/' . $_m[1];
@@ -58,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $finfo        = finfo_open(FILEINFO_MIME_TYPE);
         $mime         = finfo_file($finfo, $_FILES['logo_file']['tmp_name']);
         finfo_close($finfo);
-        $allowed = $allowedExts; // mantém compatibilidade abaixo
         if (!in_array($ext, $allowedExts) || !in_array($mime, $allowedMimes)) {
             $erro = 'Logo: formato inválido. Use JPG, PNG ou WebP.';
         } elseif ($_FILES['logo_file']['size'] > 2 * 1024 * 1024) {
@@ -160,8 +154,8 @@ $vImagemFundo = $cliente['imagem_fundo'] ?? '';
 $pageTitle   = $id !== null ? 'Editar Cliente' : 'Novo Cliente';
 $paginaAtiva = 'clientes';
 
-$adminBase = '../admin/';
-require_once __DIR__ . '/../admin/includes/sidebar.php';
+$adminBase = '../backstage/';
+require_once __DIR__ . '/../backstage/includes/sidebar.php';
 ?>
 
 <a href="index.php" class="post-back-link">
@@ -336,14 +330,13 @@ require_once __DIR__ . '/../admin/includes/sidebar.php';
 
 <script>
 (function () {
-  var radios          = document.querySelectorAll('input[name="tipo"]');
-  var campoRegiao     = document.getElementById('campo-regiao');
-  var campoFundo      = document.getElementById('campo-imagem-fundo');
-  var campoIframe     = document.getElementById('campo-iframe');
+  var radios      = document.querySelectorAll('input[name="tipo"]');
+  var campoRegiao = document.getElementById('campo-regiao');
+  var campoIframe = document.getElementById('campo-iframe');
   function toggleTipo() {
     var isParceiro = document.querySelector('input[name="tipo"]:checked').value === 'parceiro';
-    campoRegiao.style.display  = isParceiro ? 'none' : '';
-    campoIframe.style.display  = isParceiro ? 'none' : '';
+    campoRegiao.style.display = isParceiro ? 'none' : '';
+    campoIframe.style.display = isParceiro ? 'none' : '';
   }
   radios.forEach(function(r) { r.addEventListener('change', toggleTipo); });
 }());
@@ -393,7 +386,7 @@ tinymce.init({
            'bullist numlist outdent indent | link image table | code | ' +
            'searchreplace preview emoticons',
   content_style: 'body { font-family: Inter, sans-serif; font-size: 14px; }',
-  images_upload_url: '/BrasilDNA-Website/admin/upload_image.php',
+  images_upload_url: '/admin/upload_image.php',
   automatic_uploads: true,
   paste_data_images: true,
   relative_urls: false,
@@ -402,6 +395,4 @@ tinymce.init({
 });
 </script>
 
-<?php
-require_once __DIR__ . '/../admin/includes/layout-footer.php';
-?>
+<?php require_once __DIR__ . '/../backstage/includes/layout-footer.php'; ?>

@@ -1,11 +1,9 @@
 <?php
 session_start();
 require_once __DIR__ . '/../includes/conexao.php';
-
-if (empty($_SESSION['admin_id'])) {
-    header('Location: ../admin/login.php');
-    exit;
-}
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../backstage/includes/auth.php';
+exigirLogin();
 
 if ($_SESSION['admin_tipo'] === 'super_admin'
     && !empty($_GET['excluir'])
@@ -64,8 +62,8 @@ $_ctr = $_kpi['views'] > 0 ? round($_kpi['clicks'] / $_kpi['views'] * 100, 1) : 
 $pageTitle   = 'Clientes';
 $paginaAtiva = 'clientes';
 
-$adminBase = '../admin/';
-require_once __DIR__ . '/../admin/includes/sidebar.php';
+$adminBase = '../backstage/';
+require_once __DIR__ . '/../backstage/includes/sidebar.php';
 ?>
 
 <div class="adm-page-head">
@@ -223,10 +221,4 @@ require_once __DIR__ . '/../admin/includes/sidebar.php';
   </div>
 <?php endif; ?>
 
-<?php
-if ($_SESSION['admin_tipo'] === 'super_admin') {
-    require_once __DIR__ . '/../super-admin/includes/layout-footer.php';
-} else {
-    require_once __DIR__ . '/../admin/includes/layout-footer.php';
-}
-?>
+<?php require_once __DIR__ . '/../backstage/includes/layout-footer.php'; ?>
