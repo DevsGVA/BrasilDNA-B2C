@@ -168,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: index.php');
             exit;
         } catch (\PDOException $e) {
-            error_log('[BrasilDNA] super post-form: ' . $e->getMessage());
+            error_log('[BrasilDNA] backstage post-form: ' . $e->getMessage());
             $erro = 'Erro ao salvar. Tente novamente.';
         }
     }
@@ -369,8 +369,8 @@ tinymce.init({
       .layout-cols .col-img { flex: 0 0 100%; }
     }
   `,
-  // URL dinâmica: funciona em qualquer domínio
-  images_upload_url: '<?= $baseUrl ?>/super-admin/upload_image.php',
+  // URL dinâmica: funciona em qualquer domínio sem alterar o código
+  images_upload_url: '<?= $baseUrl ?>/backstage/upload_image.php',
   automatic_uploads: true,
   paste_data_images: true,
   relative_urls: false,
@@ -442,7 +442,7 @@ tinymce.init({
   images_upload_handler: function (blobInfo, progress) {
     return new Promise(function (resolve, reject) {
       var xhr = new XMLHttpRequest();
-      xhr.open('POST', '<?= $baseUrl ?>/super-admin/upload_image.php');
+      xhr.open('POST', '<?= $baseUrl ?>/backstage/upload_image.php');
       xhr.upload.onprogress = function (e) {
         progress(e.loaded / e.total * 100);
       };
