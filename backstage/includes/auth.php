@@ -12,7 +12,12 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// ─── Verifica se há sessão ativa (admin ou super_admin) ─────────────────────
+// Garante que BASE_URL está disponível mesmo se config.php ainda não foi carregado
+if (!defined('BASE_URL')) {
+    require_once __DIR__ . '/../../includes/config.php';
+}
+
+// ── Verifica se há sessão ativa (admin ou super_admin) ──────────────────
 function estaLogado(): bool
 {
     if (!isset($_SESSION['admin_id'])) return false;
@@ -30,27 +35,18 @@ function estaLogado(): bool
     return true;
 }
 
-// ─── Helpers de tipo ─────────────────────────────────────────────────────────
+// ── Helpers de tipo ──────────────────────────────────────────────────
 function ehSuperAdmin(): bool
 {
     return ($_SESSION['admin_tipo'] ?? '') === 'super_admin';
 }
 
-// ─── Mapa de permissões por tipo ─────────────────────────────────────────────
-/**
- * Retorna true se o usuário logado tem a permissão indicada.
- *
- * super_admin: acesso total.
- * admin:       pode criar/editar posts, banners e parceiros,
- *              mas NÃO pode excluir nem acessar a área de Admins.
- */
+// ── Mapa de permissões por tipo ─────────────────────────────────────────
 function canFazer(string $permissao): bool
 {
     if (!estaLogado()) return false;
+    if (ehSuperAdmin()) return true;
 
-    if (ehSuperAdmin()) return true; // super_admin faz tudo
-
-    // Permissões liberadas para admin comum
     $permitidas = [
         'criar_post',
         'editar_post',
@@ -65,15 +61,13 @@ function canFazer(string $permissao): bool
     return in_array($permissao, $permitidas, true);
 }
 
-// ─── Guards ──────────────────────────────────────────────────────────────────
+// ── Guards ──────────────────────────────────────────────────────────────
 
 /** Redireciona para o login do admin/ se não estiver autenticado. */
 function exigirLogin(): void
 {
     if (!estaLogado()) {
-        // Usa BASE_URL se definida; caso contrário navega relativamente
-        $base = defined('BASE_URL') ? BASE_URL : '../';
-        header('Location: ' . $base . 'admin/login.php');
+        header('Location: ' . BASE_URL . 'admin/login.php');
         exit;
     }
 }
@@ -82,8 +76,7 @@ function exigirLogin(): void
 function exigirSuperAdmin(): void
 {
     if (!estaLogado() || !ehSuperAdmin()) {
-        $base = defined('BASE_URL') ? BASE_URL : '../';
-        header('Location: ' . $base . 'admin/login.php');
+        header('Location: ' . BASE_URL . 'admin/login.php');
         exit;
     }
 }
@@ -95,12 +88,12 @@ function exigirSuperAdmin(): void
 function exigirPermissao(string $permissao): void
 {
     if (!canFazer($permissao)) {
-        header('Location: painel.php?erro=acesso_negado');
+        header('Location: ' . BASE_URL . 'backstage/painel.php?erro=acesso_negado');
         exit;
     }
 }
 
-// ─── CSRF ─────────────────────────────────────────────────────────────────────
+// ── CSRF ──────────────────────────────────────────────────────────────────
 function gerarCSRF(): string
 {
     if (empty($_SESSION['csrf_token'])) {
