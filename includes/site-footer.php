@@ -42,7 +42,6 @@ $v_js = file_exists(__DIR__ . '/../assets/main.js') ? filemtime(__DIR__ . '/../a
       <img src="<?= BASE_URL ?>assets/images/Logotipo_Brasil.png" alt="Marca Brasil" loading="lazy">
       <div class="logo-embratur">
         <img src="<?= BASE_URL ?>assets/images/embratur.png" alt="" loading="lazy">
-        <!-- <span class="embratur-wordmark"></span> -->
       </div>
       <img src="<?= BASE_URL ?>assets/images/ministerio-do-turismo.png" alt="Ministério do Turismo" loading="lazy">
     </div>
@@ -51,7 +50,7 @@ $v_js = file_exists(__DIR__ . '/../assets/main.js') ? filemtime(__DIR__ . '/../a
   <div class="footer-bottom">
     <div class="container painel">
       <p>&copy; <?= date('Y') ?> Brasil DNA. All rights reserved.
-      <a style="color:#fff" href="<?= BASE_URL ?>admin/login.php">Administrative Panel</a></p>
+      <a style="color:#fff" href="<?= BASE_URL ?>backstage/painel.php">Administrative Panel</a></p>
     </div>
   </div>
 </footer>
