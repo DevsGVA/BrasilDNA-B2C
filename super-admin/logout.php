@@ -1,8 +1,3 @@
 <?php
-require_once __DIR__ . '/includes/auth.php';
-
-session_unset();
-session_destroy();
-
-header('Location: login.php');
-exit;
+// Centraliza o logout em admin/logout.php
+require_once __DIR__ . '/../admin/logout.php';

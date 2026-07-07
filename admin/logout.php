@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/includes/auth.php';
 
-// Apaga todos os dados da sessão (desloga o admin).
+// Fonte única de logout — destroi sessão e volta para o login
 session_unset();
 session_destroy();
 
-header('Location: login.php');
+header('Location: ' . BASE_URL . 'admin/login.php');
 exit;

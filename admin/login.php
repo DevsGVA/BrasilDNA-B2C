@@ -2,8 +2,13 @@
 require_once __DIR__ . '/../includes/conexao.php';
 require_once __DIR__ . '/includes/auth.php';
 
+// Se já estiver logado, redireciona para o painel correto
 if (estaLogado()) {
-    header('Location: painel.php');
+    if (ehSuperAdmin()) {
+        header('Location: ' . BASE_URL . 'super-admin/painel.php');
+    } else {
+        header('Location: ' . BASE_URL . 'admin/painel.php');
+    }
     exit;
 }
 
@@ -30,8 +35,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['admin_email']   = $admin['email'];
                 $_SESSION['admin_tipo']    = $admin['tipo'];
                 $_SESSION['last_activity'] = time();
-                $destino = BASE_URL . 'admin/painel.php';
-                header('Location: ' . $destino);
+
+                // Redireciona conforme o tipo de usuário
+                if ($admin['tipo'] === 'super_admin') {
+                    header('Location: ' . BASE_URL . 'super-admin/painel.php');
+                } else {
+                    header('Location: ' . BASE_URL . 'admin/painel.php');
+                }
                 exit;
             } else {
                 $erro = 'Email ou senha incorretos. Tente novamente.';
@@ -105,4 +115,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </body>
 </html>
-
