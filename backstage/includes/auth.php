@@ -3,7 +3,6 @@
  * backstage/includes/auth.php
  *
  * Sistema de autenticação unificado para o painel backstage.
- * - Usa a mesma sessão do admin/ (login/logout compartilhados).
  * - super_admin → acesso total.
  * - admin       → acesso parcial (sem Admins, sem exclusões críticas).
  */
@@ -63,11 +62,11 @@ function canFazer(string $permissao): bool
 
 // ── Guards ──────────────────────────────────────────────────────────────
 
-/** Redireciona para o login do admin/ se não estiver autenticado. */
+/** Redireciona para o login do backstage/ se não estiver autenticado. */
 function exigirLogin(): void
 {
     if (!estaLogado()) {
-        header('Location: ' . BASE_URL . 'admin/login.php');
+        header('Location: ' . BASE_URL . 'backstage/login.php');
         exit;
     }
 }
@@ -76,7 +75,7 @@ function exigirLogin(): void
 function exigirSuperAdmin(): void
 {
     if (!estaLogado() || !ehSuperAdmin()) {
-        header('Location: ' . BASE_URL . 'admin/login.php');
+        header('Location: ' . BASE_URL . 'backstage/login.php');
         exit;
     }
 }
