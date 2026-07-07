@@ -60,7 +60,11 @@ function renderBannerAd(array $b): void {
     $bgVert = htmlspecialchars($b['imagem_vertical_url'] ?? '', ENT_QUOTES, 'UTF-8');
     if (!$bgUrl && !$bgVert) return;
     $link = BASE_URL . 'pages/banner-click.php?id=' . (int)$b['id'];
-    echo '<a href="' . htmlspecialchars($link, ENT_QUOTES, 'UTF-8') . '" class="banner-ad" target="_blank" rel="noopener noreferrer">';
+
+    // Se não há imagem mobile, adiciona classe para ocultar o banner em telas pequenas
+    $extraClass = $bgVert ? '' : ' banner-ad--desktop-only';
+
+    echo '<a href="' . htmlspecialchars($link, ENT_QUOTES, 'UTF-8') . '" class="banner-ad' . $extraClass . '" target="_blank" rel="noopener noreferrer">';
     echo '<picture>';
     if ($bgVert) echo '<source media="(max-width: 700px)" srcset="' . $bgVert . '">';
     $src = $bgUrl ?: $bgVert;
