@@ -27,13 +27,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $link     = trim($_POST['link_url']      ?? '');
     $ativo    = isset($_POST['ativo']) ? 1 : 0;
     $ordem    = 0;
-    $logo     = $banner['logo_url']   ?? null;
-    $imagem   = $banner['imagem_url'] ?? null;
+    $logo     = $banner['logo_url']            ?? null;
+    $imagem   = $banner['imagem_url']          ?? null;
+    $imagemV  = $banner['imagem_vertical_url'] ?? null;
 
     $uploadDir    = __DIR__ . '/../uploads/';
     $allowedExts  = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
     $allowedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
+    // --- Logo ---
     if (!empty($_FILES['logo_file']['tmp_name'])) {
         $ext   = strtolower(pathinfo($_FILES['logo_file']['name'], PATHINFO_EXTENSION));
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -53,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    // --- Imagem de fundo (desktop/horizontal) ---
     if (empty($erro) && !empty($_FILES['bg_file']['tmp_name'])) {
         $ext   = strtolower(pathinfo($_FILES['bg_file']['name'], PATHINFO_EXTENSION));
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -72,27 +75,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    // --- Imagem mobile (quadrada) ---
+    if (empty($erro) && !empty($_FILES['bg_mobile_file']['tmp_name'])) {
+        $ext   = strtolower(pathinfo($_FILES['bg_mobile_file']['name'], PATHINFO_EXTENSION));
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime  = finfo_file($finfo, $_FILES['bg_mobile_file']['tmp_name']);
+        finfo_close($finfo);
+        if (!in_array($ext, $allowedExts) || !in_array($mime, $allowedMimes)) {
+            $erro = 'Imagem mobile: formato inválido. Use JPG, PNG ou WebP.';
+        } elseif ($_FILES['bg_mobile_file']['size'] > 3 * 1024 * 1024) {
+            $erro = 'Imagem mobile muito grande. Máximo 3 MB.';
+        } else {
+            $filename = uniqid('bgm_') . '.' . $ext;
+            if (move_uploaded_file($_FILES['bg_mobile_file']['tmp_name'], $uploadDir . $filename)) {
+                $imagemV = 'uploads/' . $filename;
+            } else {
+                $erro = 'Falha ao salvar a imagem mobile.';
+            }
+        }
+    }
+
     if (empty($erro)) {
         try {
             if ($id !== null) {
                 $stmt = $pdo->prepare(
                     'UPDATE banners SET nome_parceiro=:nome, logo_url=:logo, imagem_url=:imagem,
+                     imagem_vertical_url=:imagemV,
                      titulo=:titulo, subtexto=:subtexto, botao_texto=:botao,
                      link_url=:link, ativo=:ativo, ordem=:ordem WHERE id=:id'
                 );
                 $stmt->execute([
                     ':nome' => $nome, ':logo' => $logo, ':imagem' => $imagem,
+                    ':imagemV' => $imagemV,
                     ':titulo' => $titulo, ':subtexto' => $subtexto, ':botao' => $botao,
                     ':link' => $link, ':ativo' => $ativo, ':ordem' => $ordem, ':id' => $id,
                 ]);
             } else {
                 $stmt = $pdo->prepare(
-                    'INSERT INTO banners (nome_parceiro, logo_url, imagem_url, titulo, subtexto,
-                     botao_texto, link_url, ativo, ordem)
-                     VALUES (:nome, :logo, :imagem, :titulo, :subtexto, :botao, :link, :ativo, :ordem)'
+                    'INSERT INTO banners (nome_parceiro, logo_url, imagem_url, imagem_vertical_url,
+                     titulo, subtexto, botao_texto, link_url, ativo, ordem)
+                     VALUES (:nome, :logo, :imagem, :imagemV, :titulo, :subtexto, :botao, :link, :ativo, :ordem)'
                 );
                 $stmt->execute([
                     ':nome' => $nome, ':logo' => $logo, ':imagem' => $imagem,
+                    ':imagemV' => $imagemV,
                     ':titulo' => $titulo, ':subtexto' => $subtexto, ':botao' => $botao,
                     ':link' => $link, ':ativo' => $ativo, ':ordem' => $ordem,
                 ]);
@@ -111,8 +137,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $vNome     = $_POST['nome_parceiro'] ?? ($banner['nome_parceiro'] ?? '');
 $vLink     = $_POST['link_url']      ?? ($banner['link_url']      ?? '');
 $vAtivo    = isset($_POST['ativo'])  ? (int) $_POST['ativo'] : (int) ($banner['ativo'] ?? 1);
-$vLogo     = $banner['logo_url']     ?? '';
-$vImagem   = $banner['imagem_url']   ?? '';
+$vLogo     = $banner['logo_url']            ?? '';
+$vImagem   = $banner['imagem_url']          ?? '';
+$vImagemV  = $banner['imagem_vertical_url'] ?? '';
 
 $pageTitle   = $id !== null ? 'Editar Banner' : 'Novo Banner';
 $paginaAtiva = 'banners';
@@ -165,6 +192,7 @@ require_once __DIR__ . '/includes/sidebar.php';
 
     <div class="post-side-card">
 
+      <!-- Logo -->
       <div class="post-side-section">
         <div class="post-side-label">Logo do parceiro</div>
         <?php if ($vLogo): ?>
@@ -182,8 +210,12 @@ require_once __DIR__ . '/includes/sidebar.php';
         <input type="file" id="logo-upload" name="logo_file" accept="image/*" style="display:none;">
       </div>
 
+      <!-- Imagem Desktop (horizontal) -->
       <div class="post-side-section">
-        <div class="post-side-label">Imagem de fundo</div>
+        <div class="post-side-label">
+          Imagem de fundo
+          <span style="font-size:.75rem;color:var(--text-muted);font-weight:400;"> — Desktop (horizontal)</span>
+        </div>
         <?php if ($vImagem): ?>
           <img id="bg-preview" src="<?= htmlspecialchars($vImagem, ENT_QUOTES, 'UTF-8') ?>"
                alt="Fundo atual" style="width:100%;border-radius:8px;margin-bottom:10px;object-fit:cover;max-height:100px;">
@@ -194,11 +226,35 @@ require_once __DIR__ . '/includes/sidebar.php';
           <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
             <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
           </svg>
-          <span id="bg-label">Enviar imagem de fundo</span>
+          <span id="bg-label">Enviar imagem de fundo (desktop)</span>
         </label>
         <input type="file" id="bg-upload" name="bg_file" accept="image/*" style="display:none;">
       </div>
 
+      <!-- Imagem Mobile (quadrada) -->
+      <div class="post-side-section">
+        <div class="post-side-label">
+          Imagem mobile
+          <span style="font-size:.75rem;color:var(--text-muted);font-weight:400;"> — Quadrada (≤ 700 px)</span>
+        </div>
+        <p style="font-size:.78rem;color:var(--text-muted);margin-bottom:8px;line-height:1.4;"
+           >Exibida em telas estreitas no lugar da imagem horizontal. Recomendado: proporção 1:1 (ex: 800×800 px).</p>
+        <?php if ($vImagemV): ?>
+          <img id="bgm-preview" src="<?= htmlspecialchars($vImagemV, ENT_QUOTES, 'UTF-8') ?>"
+               alt="Mobile atual" style="width:100%;border-radius:8px;margin-bottom:10px;object-fit:cover;max-height:100px;">
+        <?php else: ?>
+          <img id="bgm-preview" src="" alt="" style="display:none;width:100%;border-radius:8px;margin-bottom:10px;object-fit:cover;max-height:100px;">
+        <?php endif; ?>
+        <label class="post-img-upload" for="bgm-upload">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+          </svg>
+          <span id="bgm-label">Enviar imagem mobile (quadrada)</span>
+        </label>
+        <input type="file" id="bgm-upload" name="bg_mobile_file" accept="image/*" style="display:none;">
+      </div>
+
+      <!-- Status -->
       <div class="post-side-section">
         <div class="post-side-label">Status</div>
         <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:.9rem;color:var(--text);">
@@ -235,6 +291,7 @@ function bindUploadPreview(inputId, previewId, labelId) {
 }
 bindUploadPreview('logo-upload', 'logo-preview', 'logo-label');
 bindUploadPreview('bg-upload',   'bg-preview',   'bg-label');
+bindUploadPreview('bgm-upload',  'bgm-preview',  'bgm-label');
 </script>
 
 <?php require_once __DIR__ . '/includes/layout-footer.php'; ?>

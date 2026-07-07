@@ -64,7 +64,8 @@ require_once __DIR__ . '/includes/sidebar.php';
       <thead>
         <tr>
           <th>Parceiro</th>
-          <th>Título</th>
+          <th>Desktop</th>
+          <th>Mobile</th>
           <th>Status</th>
           <th>Ordem</th>
           <th>Ações</th>
@@ -74,7 +75,24 @@ require_once __DIR__ . '/includes/sidebar.php';
         <?php foreach ($banners as $b): ?>
           <tr>
             <td><div class="adm-table__title"><?= htmlspecialchars($b['nome_parceiro']) ?></div></td>
-            <td><?= htmlspecialchars($b['titulo'] ?? '—') ?></td>
+            <td>
+              <?php if (!empty($b['imagem_url'])): ?>
+                <img src="<?= htmlspecialchars($b['imagem_url'], ENT_QUOTES, 'UTF-8') ?>"
+                     alt="desktop" loading="lazy"
+                     style="height:36px;border-radius:4px;object-fit:cover;max-width:90px;">
+              <?php else: ?>
+                <span class="adm-table__meta" style="color:var(--text-muted)">—</span>
+              <?php endif; ?>
+            </td>
+            <td>
+              <?php if (!empty($b['imagem_vertical_url'])): ?>
+                <img src="<?= htmlspecialchars($b['imagem_vertical_url'], ENT_QUOTES, 'UTF-8') ?>"
+                     alt="mobile" loading="lazy"
+                     style="height:36px;border-radius:4px;object-fit:cover;max-width:40px;">
+              <?php else: ?>
+                <span class="adm-table__meta" style="color:var(--text-muted)">—</span>
+              <?php endif; ?>
+            </td>
             <td>
               <span class="badge <?= $b['ativo'] ? 'badge-pub' : 'badge-draft' ?>">
                 <?= $b['ativo'] ? 'Ativo' : 'Inativo' ?>
