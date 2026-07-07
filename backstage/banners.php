@@ -27,6 +27,19 @@ if (!empty($_GET['parceiro']) && ctype_digit($_GET['parceiro'])) {
 }
 $banners = $stmt->fetchAll();
 
+/**
+ * Resolve o caminho de imagem salvo no banco para uso no backstage.
+ * O banco guarda caminhos como 'uploads/filename.jpg' (relativos à raiz).
+ * Como este arquivo está em /backstage/, precisamos prefixar '../'.
+ */
+function backstageImgUrl(string $path): string {
+    if (!$path) return '';
+    if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+        return htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
+    }
+    return htmlspecialchars('../' . ltrim($path, '/'), ENT_QUOTES, 'UTF-8');
+}
+
 $pageTitle   = 'Banners de Parceiros';
 $paginaAtiva = 'banners';
 require_once __DIR__ . '/includes/sidebar.php';
@@ -77,20 +90,20 @@ require_once __DIR__ . '/includes/sidebar.php';
             <td><div class="adm-table__title"><?= htmlspecialchars($b['nome_parceiro']) ?></div></td>
             <td>
               <?php if (!empty($b['imagem_url'])): ?>
-                <img src="<?= htmlspecialchars($b['imagem_url'], ENT_QUOTES, 'UTF-8') ?>"
+                <img src="<?= backstageImgUrl($b['imagem_url']) ?>"
                      alt="desktop" loading="lazy"
                      style="height:36px;border-radius:4px;object-fit:cover;max-width:90px;">
               <?php else: ?>
-                <span class="adm-table__meta" style="color:var(--text-muted)">—</span>
+                <span class="adm-table__meta" style="color:var(--text-muted)">&#8212;</span>
               <?php endif; ?>
             </td>
             <td>
               <?php if (!empty($b['imagem_vertical_url'])): ?>
-                <img src="<?= htmlspecialchars($b['imagem_vertical_url'], ENT_QUOTES, 'UTF-8') ?>"
+                <img src="<?= backstageImgUrl($b['imagem_vertical_url']) ?>"
                      alt="mobile" loading="lazy"
                      style="height:36px;border-radius:4px;object-fit:cover;max-width:40px;">
               <?php else: ?>
-                <span class="adm-table__meta" style="color:var(--text-muted)">—</span>
+                <span class="adm-table__meta" style="color:var(--text-muted)">&#8212;</span>
               <?php endif; ?>
             </td>
             <td>
