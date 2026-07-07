@@ -59,12 +59,19 @@ function renderBannerAd(array $b): void {
     $bgUrl  = htmlspecialchars($b['imagem_url']          ?? '', ENT_QUOTES, 'UTF-8');
     $bgVert = htmlspecialchars($b['imagem_vertical_url'] ?? '', ENT_QUOTES, 'UTF-8');
     if (!$bgUrl && !$bgVert) return;
-    $link = BASE_URL . 'pages/banner-click.php?id=' . (int)$b['id'];
+
+    // Usa o link_url cadastrado no backstage; fallback para '#' se vazio
+    $linkRaw = trim((string)($b['link_url'] ?? ''));
+    $link    = $linkRaw !== '' ? htmlspecialchars($linkRaw, ENT_QUOTES, 'UTF-8') : '#';
+
+    // Registra clique via banner-click.php (tracking) sem alterar o destino
+    $trackId = (int)$b['id'];
 
     // Se não há imagem mobile, adiciona classe para ocultar o banner em telas pequenas
     $extraClass = $bgVert ? '' : ' banner-ad--desktop-only';
 
-    echo '<a href="' . htmlspecialchars($link, ENT_QUOTES, 'UTF-8') . '" class="banner-ad' . $extraClass . '" target="_blank" rel="noopener noreferrer">';
+    echo '<a href="' . $link . '" class="banner-ad' . $extraClass . '" target="_blank" rel="noopener noreferrer"'
+       . ' onclick="(function(){var f=new FormData();f.append(\'id\',' . $trackId . ');navigator.sendBeacon(window.SITE_BASE+\'pages/banner-click.php\',f);})()">';
     echo '<picture>';
     if ($bgVert) echo '<source media="(max-width: 700px)" srcset="' . $bgVert . '">';
     $src = $bgUrl ?: $bgVert;
