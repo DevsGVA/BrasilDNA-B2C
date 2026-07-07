@@ -39,12 +39,7 @@ $featuredImg = !empty($post['imagem'])
     : ($regionImages[$post['regiao'] ?? ''] ?? $defaultImg);
 
 $rawDate  = !empty($post['data_publicacao']) ? $post['data_publicacao'] : ($post['criado_em'] ?? '');
-$meses    = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-$postDate = '';
-if ($rawDate) {
-    $ts       = strtotime($rawDate);
-    $postDate = date('d', $ts) . ' de ' . $meses[(int) date('n', $ts) - 1] . ' de ' . date('Y', $ts);
-}
+$postDate = $rawDate ? date('m/d/Y', strtotime($rawDate)) : '';
 
 $resumo      = trim($post['resumo']   ?? '');
 $regiao      = trim($post['regiao']   ?? '');
@@ -109,4 +104,3 @@ require_once __DIR__ . '/../includes/site-header.php';
 </section>
 
 <?php require_once __DIR__ . '/../includes/site-footer.php'; ?>
-

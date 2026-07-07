@@ -533,7 +533,7 @@ $_totalPartners = count($destinos_home);
     <div class="news-grid">
       <?php foreach ($posts_home as $_pi => $_p):
         $postLink = BASE_URL . 'pages/post.php?id=' . (int) $_p['id'];
-        $postDate = !empty($_p['data_publicacao']) ? date('d/m/Y', strtotime($_p['data_publicacao'])) : '';
+        $postDate = !empty($_p['data_publicacao']) ? date('m/d/Y', strtotime($_p['data_publicacao'])) : '';
         $delay    = $_pi * 80;
         $imgSrc   = trim((string)($_p['imagem'] ?? ''));
         $imgAlt   = htmlspecialchars((string)($_p['titulo'] ?? ''), ENT_QUOTES, 'UTF-8');

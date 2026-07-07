@@ -40,7 +40,7 @@ function postImage(array $post, array $map, string $default): string {
 
 function postDate(array $post): string {
     $raw = !empty($post['data_publicacao']) ? $post['data_publicacao'] : ($post['criado_em'] ?? '');
-    return $raw ? date('d/m/Y', strtotime($raw)) : '';
+    return $raw ? date('m/d/Y', strtotime($raw)) : '';
 }
 
 $pageTitle   = 'News & Inspiration — Brasil DNA';
