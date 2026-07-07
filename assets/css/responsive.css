@@ -231,3 +231,19 @@
       padding: 7px 13px 7px 10px;
    }
 }
+
+/* ============================================================
+   BANNER AD — Ocultar banner sem imagem mobile
+   Quando o banner não possui imagem vertical cadastrada,
+   a classe .banner-ad--desktop-only é adicionada pelo PHP
+   e o slot inteiro é ocultado em telas pequenas.
+   ============================================================ */
+@media (max-width: 700px) {
+   .banner-ad--desktop-only {
+      display: none !important;
+   }
+   /* Oculta também o slot pai para não deixar espaço em branco */
+   .banner-ad-slot:has(.banner-ad--desktop-only) {
+      display: none !important;
+   }
+}
