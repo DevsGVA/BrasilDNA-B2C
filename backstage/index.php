@@ -12,14 +12,44 @@ if (isset($_GET['excluir']) && ctype_digit($_GET['excluir'])) {
     exit;
 }
 
-$stmt  = $pdo->query(
-    'SELECT p.*, COALESCE(SUM(s.visualizacoes), 0) AS views
-     FROM posts p
-     LEFT JOIN stats_diario s ON s.tipo = "post" AND s.referencia_id = p.id
-     GROUP BY p.id
-     ORDER BY p.criado_em DESC'
-);
+$filtroTitulo = trim($_GET['titulo'] ?? '');
+$filtroMes    = isset($_GET['mes']) && ctype_digit($_GET['mes']) && $_GET['mes'] >= 1 && $_GET['mes'] <= 12 ? (int) $_GET['mes'] : 0;
+$filtroAno    = isset($_GET['ano']) && ctype_digit($_GET['ano']) ? (int) $_GET['ano'] : 0;
+
+$where  = [];
+$params = [];
+
+if ($filtroTitulo !== '') {
+    $where[]           = 'p.titulo LIKE :titulo';
+    $params[':titulo']  = '%' . $filtroTitulo . '%';
+}
+if ($filtroMes > 0) {
+    $where[]         = 'MONTH(COALESCE(p.data_publicacao, p.criado_em)) = :mes';
+    $params[':mes']  = $filtroMes;
+}
+if ($filtroAno > 0) {
+    $where[]         = 'YEAR(COALESCE(p.data_publicacao, p.criado_em)) = :ano';
+    $params[':ano']  = $filtroAno;
+}
+
+$sql = 'SELECT p.*, COALESCE(SUM(s.visualizacoes), 0) AS views
+        FROM posts p
+        LEFT JOIN stats_diario s ON s.tipo = "post" AND s.referencia_id = p.id';
+if ($where) {
+    $sql .= ' WHERE ' . implode(' AND ', $where);
+}
+$sql .= ' GROUP BY p.id ORDER BY COALESCE(p.data_publicacao, p.criado_em) DESC';
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute($params);
 $posts = $stmt->fetchAll();
+
+$meses = [
+    1=>'Janeiro', 2=>'Fevereiro', 3=>'Março', 4=>'Abril', 5=>'Maio', 6=>'Junho',
+    7=>'Julho', 8=>'Agosto', 9=>'Setembro', 10=>'Outubro', 11=>'Novembro', 12=>'Dezembro',
+];
+$anoAtual = (int) date('Y');
+$anos     = range($anoAtual, $anoAtual - 5);
 
 $pageTitle   = 'Posts';
 $paginaAtiva = 'posts';
@@ -38,9 +68,30 @@ require_once __DIR__ . '/includes/sidebar.php';
   <?php endif; ?>
 </div>
 
+<form method="get" class="adm-filters">
+  <input type="text" name="titulo" placeholder="Buscar por título…" value="<?= htmlspecialchars($filtroTitulo) ?>"
+         class="adm-form__input adm-filters__search">
+  <select name="mes" class="adm-form__select adm-filters__select" data-custom-select>
+    <option value="">Mês</option>
+    <?php foreach ($meses as $num => $nome): ?>
+      <option value="<?= $num ?>" <?= $filtroMes === $num ? 'selected' : '' ?>><?= $nome ?></option>
+    <?php endforeach; ?>
+  </select>
+  <select name="ano" class="adm-form__select adm-filters__select" data-custom-select>
+    <option value="">Ano</option>
+    <?php foreach ($anos as $ano): ?>
+      <option value="<?= $ano ?>" <?= $filtroAno === $ano ? 'selected' : '' ?>><?= $ano ?></option>
+    <?php endforeach; ?>
+  </select>
+  <button type="submit" class="btn btn-primary">Filtrar</button>
+  <?php if ($filtroTitulo !== '' || $filtroMes > 0 || $filtroAno > 0): ?>
+    <a href="index.php" class="btn btn-ghost">Limpar</a>
+  <?php endif; ?>
+</form>
+
 <?php if (count($posts) === 0): ?>
   <div class="adm-card adm-empty">
-    <p>Nenhum post cadastrado ainda.</p>
+    <p>Nenhum post encontrado.</p>
     <?php if (canFazer('criar_post')): ?>
       <a href="post-form.php" class="btn btn-primary">Criar primeiro post</a>
     <?php endif; ?>
@@ -53,7 +104,7 @@ require_once __DIR__ . '/includes/sidebar.php';
         <tr>
           <th>Título</th>
           <th>Status</th>
-          <th>Data</th>
+          <th>Data de publicação</th>
           <th>Views</th>
           <th>Ações</th>
         </tr>
@@ -71,9 +122,8 @@ require_once __DIR__ . '/includes/sidebar.php';
               'rascunho'  => 'Rascunho',
               default     => htmlspecialchars($post['status']),
             };
-            $data = !empty($post['criado_em'])
-              ? date('d/m/Y', strtotime($post['criado_em']))
-              : '—';
+            $dataRef = $post['data_publicacao'] ?? $post['criado_em'] ?? '';
+            $data    = $dataRef ? date('d/m/Y', strtotime($dataRef)) : '—';
           ?>
           <tr>
             <td>
