@@ -80,7 +80,7 @@ require_once __DIR__ . '/includes/sidebar.php';
           <th>Desktop</th>
           <th>Mobile</th>
           <th>Status</th>
-          <th>Ordem</th>
+          <th>Cliques</th>
           <th>Ações</th>
         </tr>
       </thead>
@@ -111,7 +111,7 @@ require_once __DIR__ . '/includes/sidebar.php';
                 <?= $b['ativo'] ? 'Ativo' : 'Inativo' ?>
               </span>
             </td>
-            <td><span class="adm-table__meta"><?= (int) $b['ordem'] ?></span></td>
+            <td><span class="adm-table__meta"><?= (int) $b['cliques'] ?></span></td>
             <td>
               <div class="adm-table__actions">
                 <?php if (canFazer('editar_banner')): ?>

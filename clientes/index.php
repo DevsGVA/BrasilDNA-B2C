@@ -85,10 +85,6 @@ require_once __DIR__ . '/../backstage/includes/sidebar.php';
 
 <div class="painel-kpi-grid" style="margin-bottom:24px;">
   <div class="painel-kpi-card">
-    <div class="painel-kpi-label">Visualizações</div>
-    <div class="painel-kpi-value"><?= number_format((int)$_kpi['views'], 0, ',', '.') ?></div>
-  </div>
-  <div class="painel-kpi-card">
     <div class="painel-kpi-label">Cliques</div>
     <div class="painel-kpi-value"><?= number_format((int)$_kpi['clicks'], 0, ',', '.') ?></div>
   </div>
@@ -97,44 +93,6 @@ require_once __DIR__ . '/../backstage/includes/sidebar.php';
     <div class="painel-kpi-value"><?= $_ctr ?>%</div>
   </div>
 </div>
-
-<?php if (!empty($_ranking)): ?>
-<div class="adm-card painel-chart-card" style="margin-bottom:28px;">
-  <div class="painel-chart-head">
-    <span class="painel-chart-title">Ranking de clientes</span>
-  </div>
-  <div class="adm-table-wrap">
-    <table class="adm-table">
-      <thead>
-        <tr>
-          <th>Cliente</th>
-          <th>Tipo</th>
-          <th>Views</th>
-          <th>Cliques</th>
-          <th>CTR</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php foreach ($_ranking as $_r): ?>
-          <tr>
-            <td><div class="adm-table__title"><?= htmlspecialchars($_r['nome']) ?></div></td>
-            <td>
-              <span style="font-size:.75rem;font-weight:600;padding:2px 7px;border-radius:4px;
-                background:<?= $_r['subtipo']==='parceiro' ? 'rgba(0,80,180,.15)' : 'rgba(0,140,60,.15)' ?>;
-                color:<?= $_r['subtipo']==='parceiro' ? '#0050b4' : '#00803a' ?>;">
-                <?= $_r['subtipo']==='parceiro' ? 'Parceiro' : 'Destino' ?>
-              </span>
-            </td>
-            <td><?= number_format((int)$_r['views'], 0, ',', '.') ?></td>
-            <td><?= number_format((int)$_r['clicks'], 0, ',', '.') ?></td>
-            <td><?= $_r['views'] > 0 ? round($_r['clicks'] / $_r['views'] * 100, 1) : 0 ?>%</td>
-          </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
-  </div>
-</div>
-<?php endif; ?>
 
 <?php if (count($clientes) === 0): ?>
   <div class="adm-card adm-empty">
@@ -219,6 +177,42 @@ require_once __DIR__ . '/../backstage/includes/sidebar.php';
       </tbody>
     </table>
   </div>
+<?php endif; ?>
+
+<?php if (!empty($_ranking)): ?>
+<div class="adm-card painel-chart-card" style="margin-top:28px;">
+  <div class="painel-chart-head">
+    <span class="painel-chart-title">Ranking de clientes</span>
+  </div>
+  <div class="adm-table-wrap">
+    <table class="adm-table">
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Tipo</th>
+          <th>Cliques</th>
+          <th>CTR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($_ranking as $_r): ?>
+          <tr>
+            <td><div class="adm-table__title"><?= htmlspecialchars($_r['nome']) ?></div></td>
+            <td>
+              <span style="font-size:.75rem;font-weight:600;padding:2px 7px;border-radius:4px;
+                background:<?= $_r['subtipo']==='parceiro' ? 'rgba(0,80,180,.15)' : 'rgba(0,140,60,.15)' ?>;
+                color:<?= $_r['subtipo']==='parceiro' ? '#0050b4' : '#00803a' ?>;">
+                <?= $_r['subtipo']==='parceiro' ? 'Parceiro' : 'Destino' ?>
+              </span>
+            </td>
+            <td><?= number_format((int)$_r['clicks'], 0, ',', '.') ?></td>
+            <td><?= $_r['views'] > 0 ? round($_r['clicks'] / $_r['views'] * 100, 1) : 0 ?>%</td>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
+</div>
 <?php endif; ?>
 
 <?php require_once __DIR__ . '/../backstage/includes/layout-footer.php'; ?>

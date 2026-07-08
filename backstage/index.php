@@ -12,7 +12,13 @@ if (isset($_GET['excluir']) && ctype_digit($_GET['excluir'])) {
     exit;
 }
 
-$stmt  = $pdo->query('SELECT * FROM posts ORDER BY criado_em DESC');
+$stmt  = $pdo->query(
+    'SELECT p.*, COALESCE(SUM(s.visualizacoes), 0) AS views
+     FROM posts p
+     LEFT JOIN stats_diario s ON s.tipo = "post" AND s.referencia_id = p.id
+     GROUP BY p.id
+     ORDER BY p.criado_em DESC'
+);
 $posts = $stmt->fetchAll();
 
 $pageTitle   = 'Posts';
@@ -48,6 +54,7 @@ require_once __DIR__ . '/includes/sidebar.php';
           <th>Título</th>
           <th>Status</th>
           <th>Data</th>
+          <th>Views</th>
           <th>Ações</th>
         </tr>
       </thead>
@@ -74,6 +81,7 @@ require_once __DIR__ . '/includes/sidebar.php';
             </td>
             <td><span class="badge <?= $badgeClass ?>"><?= $badgeLabel ?></span></td>
             <td><span class="adm-table__meta"><?= $data ?></span></td>
+            <td><span class="adm-table__meta"><?= number_format((int)$post['views'], 0, ',', '.') ?></span></td>
             <td>
               <div class="adm-table__actions">
                 <?php if (canFazer('editar_post')): ?>

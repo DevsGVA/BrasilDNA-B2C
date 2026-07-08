@@ -11,7 +11,7 @@ if ($id > 0) {
         $post = $stmt->fetch();
         if ($post) {
             require_once __DIR__ . '/../includes/stats.php';
-            registrarStat($pdo, 'post', $id, 'cliques');
+            registrarStat($pdo, 'post', $id, 'visualizacoes');
         }
     } catch (\PDOException $e) {
         $post = null;
